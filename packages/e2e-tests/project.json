@@ -1,0 +1,23 @@
+{
+  "root": "packages/e2e-tests",
+  "sourceRoot": "packages/e2e-tests/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/e2e-tests/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/e2e-tests"],
+      "options": {
+        "jestConfig": "packages/e2e-tests/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["scope:public", "type:util", "target:all"]
+}

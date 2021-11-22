@@ -3,6 +3,7 @@
     "nrwl.angular-console",
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
+    "bierner.comment-tagged-templates",
     "firsttris.vscode-jest-runner"
   ]
 }

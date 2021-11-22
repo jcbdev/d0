@@ -2,7 +2,7 @@ import { when } from '../lib/when';
 import { Action } from '../lib/types';
 
 describe('conditionally execute an action', () => {
-  it('should run true action', () => {
+  it('should run true action', async () => {
     let trueAction: Action = (values, ctx) => {
       ctx.values['result'] = true;
       return ctx;
@@ -12,14 +12,14 @@ describe('conditionally execute an action', () => {
       return ctx;
     };
 
-    let result = when(() => true, trueAction, falseAction)({}, { tmpl: {}, values: {} });
+    let result = await when(() => true, trueAction, falseAction)({}, { tmpl: {}, values: {} });
     expect(result).toMatchObject({
       tmpl: {},
       values: { result: true },
     });
   });
 
-  it('should run false action', () => {
+  it('should run false action', async () => {
     let trueAction: Action = (values, ctx) => {
       ctx.values['result'] = true;
       return ctx;
@@ -29,14 +29,14 @@ describe('conditionally execute an action', () => {
       return ctx;
     };
 
-    let result = when(() => false, trueAction, falseAction)({}, { tmpl: {}, values: {} });
+    let result = await when(() => false, trueAction, falseAction)({}, { tmpl: {}, values: {} });
     expect(result).toMatchObject({
       tmpl: {},
       values: { result: false },
     });
   });
 
-  it('condition has access to context', () => {
+  it('condition has access to context', async () => {
     let trueAction: Action = (values, ctx) => {
       ctx.values['result'] = true;
       return ctx;
@@ -46,7 +46,7 @@ describe('conditionally execute an action', () => {
       return ctx;
     };
 
-    let result = when(
+    let result = await when(
       (values, ctx) => values.test,
       trueAction,
       falseAction

@@ -2,7 +2,7 @@ import { sequence } from '../lib/sequence';
 import { Action } from '../lib/types';
 
 describe('execute a set of template actions in a sequence', () => {
-  it('should run sequence and resolve', () => {
+  it('should run sequence and resolve', async () => {
     let mockAction1: Action = (values, ctx) => {
       ctx.values['count'] = 1;
       return ctx;
@@ -19,7 +19,7 @@ describe('execute a set of template actions in a sequence', () => {
     };
 
     let actions: Action[] = [mockAction1, mockAction2, mockAction3];
-    let result = sequence(actions)({}, { tmpl: {}, values: {} });
+    let result = await sequence(actions)({}, { tmpl: {}, values: {} });
     expect(result).toEqual({
       tmpl: { template: 'TAADAA' },
       values: { count: 3, newvalue: true },

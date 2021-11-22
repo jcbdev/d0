@@ -1,53 +1,30 @@
 import { d0 } from '../lib/d0';
 import { Action } from '../lib/types';
 
-describe('execute a set of template function and resolve a value', () => {
-  it('should run sequence and resolve', () => {
+describe('execute a function', () => {
+  it('should run action and return updated context', async () => {
     let mockAction1: Action = (values, ctx) => {
       ctx.values['count'] = 1;
       return ctx;
     };
-    let mockAction2: Action = (values, ctx) => {
-      ctx.values['count']++;
-      ctx.values['newvalue'] = true;
-      return ctx;
-    };
-    let mockAction3: Action = (values, ctx) => {
-      ctx.values['count']++;
-      ctx.tmpl['template'] = 'TAADAA';
-      return ctx;
-    };
 
-    let actions: Action[] = [mockAction1, mockAction2, mockAction3];
-    let result = JSON.parse(d0(actions, ctx => JSON.stringify(ctx)));
+    let result = await d0(mockAction1);
     expect(result).toEqual({
-      tmpl: { template: 'TAADAA' },
-      values: { count: 3, newvalue: true },
+      tmpl: {},
+      values: { count: 1 },
     });
   });
 
-  it('should run sequence and resolve a complex value', () => {
+  it('should run action and update existing context', async () => {
     let mockAction1: Action = (values, ctx) => {
-      ctx.values['count'] = 3;
-      return ctx;
-    };
-    let mockAction2: Action = (values, ctx) => {
-      ctx.values['count']++;
-      ctx.values['newvalue'] = 'BLAHBLAH';
-      return ctx;
-    };
-    let mockAction3: Action = (values, ctx) => {
-      ctx.values['count']++;
-      ctx.tmpl['template'] = 'TAADAA';
+      ctx.values['count'] = 1;
       return ctx;
     };
 
-    let actions: Action[] = [mockAction1, mockAction2, mockAction3];
-    let result = d0(
-      actions,
-      ctx =>
-        `I calculated ${ctx.values['count']} and ${ctx.values['newvalue']} with template "${ctx.tmpl['template']}"`
-    );
-    expect(result).toEqual('I calculated 5 and BLAHBLAH with template "TAADAA"');
+    let result = await d0(mockAction1, { tmpl: { test: '1' }, values: { existing: true } });
+    expect(result).toEqual({
+      tmpl: { test: '1' },
+      values: { count: 1, existing: true },
+    });
   });
 });

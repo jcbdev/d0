@@ -1,12 +1,9 @@
-import { Action, Context, Resolve } from './types';
+import { Action, Context } from './types';
 
-export const d0 = (actions: Action[], resolve: Resolve): string => {
-  let ctx: Context = {
+export const d0 = async (action: Action, withCtx?: Context): Promise<Context> => {
+  let ctx: Context = withCtx ?? {
     tmpl: {},
     values: {},
   };
-  for (let act of actions) {
-    ctx = act(ctx.values, ctx);
-  }
-  return resolve(ctx);
+  return await action(ctx.values, ctx);
 };

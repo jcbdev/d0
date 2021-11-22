@@ -7,6 +7,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
@@ -15,7 +16,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@d0/core": ["packages/core/src/index.ts"]
+      "@d0/core": ["packages/core/src/index.ts"],
+      "@d0/e2e-tests": ["packages/e2e-tests/src/index.ts"],
+      "@d0/from-json": ["packages/from-json/src/index.ts"],
+      "@d0/prettier": ["packages/prettier/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

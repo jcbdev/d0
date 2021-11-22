@@ -1,6 +1,9 @@
 {
   "version": 2,
   "projects": {
-    "core": "packages/core"
+    "core": "packages/core",
+    "e2e-tests": "packages/e2e-tests",
+    "from-json": "packages/from-json",
+    "prettier": "packages/prettier"
   }
 }

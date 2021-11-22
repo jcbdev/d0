@@ -1,6 +1,6 @@
-# D0
+# d0
 
-Simple and hackable template generation intended to simplify code generation.
+d0 simple and hackable templates and code generation.
 
 ## Installation
 
