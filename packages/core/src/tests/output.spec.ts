@@ -16,7 +16,7 @@ describe('should save text to file', () => {
       `${(Math.random() + 1).toString(36).substring(7)}-${(Math.random() + 1).toString(36).substring(7)}.json`
     );
 
-    let result = await output(outputJson, rndFile)({}, { tmpl: {}, values: {} });
+    let result = await output(rndFile, () => outputJson)({ $tmpl: {} });
 
     let resultJson = JSON.parse(await readFile(rndFile, 'utf8'));
     expect(resultJson).toEqual({

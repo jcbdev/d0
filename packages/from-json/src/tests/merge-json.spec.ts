@@ -7,11 +7,9 @@ describe('should merge a context from a json file', () => {
   it('should merge from file', async () => {
     const json = /* json */ `
     {
-      "values": {
-        "testValue": "Hello",
-        "otherValue": 123
-      },
-      "tmpl": { "testTemplate": "Something" }
+      "testValue": "Hello",
+      "otherValue": 123,
+      "$tmpl": { "testTemplate": "Something" }
     }
     `;
     let rndFile = path.resolve(
@@ -19,15 +17,13 @@ describe('should merge a context from a json file', () => {
       `${(Math.random() + 1).toString(36).substring(7)}-${(Math.random() + 1).toString(36).substring(7)}.json`
     );
     await writeFile(rndFile, json);
-    let result = await mergeJson(rndFile)({}, { tmpl: {}, values: {} });
+    let result = await mergeJson(rndFile)({ $tmpl: {} });
     expect(result).toEqual({
-      tmpl: {
+      $tmpl: {
         testTemplate: 'Something',
       },
-      values: {
-        testValue: 'Hello',
-        otherValue: 123,
-      },
+      testValue: 'Hello',
+      otherValue: 123,
     });
   });
 });

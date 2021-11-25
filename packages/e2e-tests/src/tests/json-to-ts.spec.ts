@@ -51,12 +51,12 @@ describe('Generate some typescript from a JSON source', () => {
             ${props.join('\n')}
           }`;
         }),
-        pretty('result', ctx => ctx.tmpl.baseType, { parser: 'typescript', filepath: '1.ts' }),
-        output(outFileName, ctx => ctx.values.result),
+        pretty('result', ctx => ctx.$tmpl.baseType, { parser: 'typescript', filepath: '1.ts' }),
+        output(outFileName, ctx => ctx.result),
       ])
     );
 
-    expect(ctx.values.result).toEqual(`export type Test = {
+    expect(ctx.result).toEqual(`export type Test = {
   id: number;
   test: string;
 };

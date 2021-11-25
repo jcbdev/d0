@@ -3,10 +3,10 @@ import { template } from '../lib/template';
 describe('template literal templating', () => {
   it('should convert basic primitives', async () => {
     let action = template('test1', ({ test }: { test: string }) => `Convert ${test} to something`);
-    let result = action({ test: 'Hello!' }, { tmpl: {}, values: { test: 'Hello!' } });
+    let result = action({ $tmpl: {}, test: 'Hello!' });
     expect(result).toEqual({
-      tmpl: { test1: 'Convert Hello! to something' },
-      values: { test: 'Hello!' },
+      $tmpl: { test1: 'Convert Hello! to something' },
+      test: 'Hello!',
     });
   });
 
@@ -14,13 +14,10 @@ describe('template literal templating', () => {
     let action = template('test1', ({ test }: { test: any[] }) =>
       test.map(t => `Convert ${t} to something`).join(', ')
     );
-    let result = await action(
-      { test: ['Hello!', 1, 'beep boop'] },
-      { tmpl: {}, values: { test: ['Hello!', 1, 'beep boop'] } }
-    );
+    let result = await action({ $tmpl: {}, test: ['Hello!', 1, 'beep boop'] });
     expect(result).toEqual({
-      tmpl: { test1: 'Convert Hello! to something, Convert 1 to something, Convert beep boop to something' },
-      values: { test: ['Hello!', 1, 'beep boop'] },
+      $tmpl: { test1: 'Convert Hello! to something, Convert 1 to something, Convert beep boop to something' },
+      test: ['Hello!', 1, 'beep boop'],
     });
   });
 });

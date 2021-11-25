@@ -3,9 +3,9 @@ import { FileHandle, readFile } from 'fs/promises';
 import { PathLike } from 'fs';
 
 export const fromJson = (name: string, path: PathLike | FileHandle): Action => {
-  return async (values: Record<string, any>, ctx: Context) => {
+  return async (ctx: Context) => {
     const text = await readFile(path, 'utf8');
-    ctx.values[name] = JSON.parse(text);
+    ctx[name] = JSON.parse(text);
     return ctx;
   };
 };
