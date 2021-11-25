@@ -1,0 +1,34 @@
+{
+  "root": "packages/from-yaml",
+  "sourceRoot": "packages/from-yaml/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/from-yaml/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/from-yaml"],
+      "options": {
+        "jestConfig": "packages/from-yaml/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/from-yaml",
+        "tsConfig": "packages/from-yaml/tsconfig.lib.json",
+        "packageJson": "packages/from-yaml/package.json",
+        "main": "packages/from-yaml/src/index.ts",
+        "assets": ["packages/from-yaml/*.md"]
+      }
+    }
+  },
+  "tags": ["scope:public", "type:util", "target:all"]
+}
