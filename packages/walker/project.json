@@ -1,0 +1,34 @@
+{
+  "root": "packages/walker",
+  "sourceRoot": "packages/walker/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/walker/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/walker"],
+      "options": {
+        "jestConfig": "packages/walker/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/walker",
+        "tsConfig": "packages/walker/tsconfig.lib.json",
+        "packageJson": "packages/walker/package.json",
+        "main": "packages/walker/src/index.ts",
+        "assets": ["packages/walker/*.md"]
+      }
+    }
+  },
+  "tags": ["scope:public", "type:util", "target:all"]
+}
