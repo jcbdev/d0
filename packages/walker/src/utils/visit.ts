@@ -41,7 +41,7 @@ export const visit = (node: any, info: NodeInfo, selector: NodeSelector, visitor
     if (visitor[matchProp(visitor, nodeType)] && visitor[matchProp(visitor, nodeType)]?.leave)
       newNode = visitor[matchProp(visitor, nodeType)]?.leave(newNode, info, ctx);
     return newNode;
-  } else if (isObject(node)) {
+  } else if (isObject(node) && Object.prototype.toString.call(node) === '[object Object]') {
     let nodeType = selector.object(node, info);
     let newNode = { ...node };
     let newInfo: NodeInfo = {
@@ -69,6 +69,7 @@ export const visit = (node: any, info: NodeInfo, selector: NodeSelector, visitor
   } else {
     let nodeType = selector.primitive(node, info);
     let newNode = node;
+    if (isObject(node)) newNode = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
     if (visitor.enter && matchProp(visitor.enter, nodeType))
       newNode = visitor.enter[matchProp(visitor.enter, nodeType)](newNode, info, ctx);
     if (matchProp(visitor, nodeType) && visitor[matchProp(visitor, nodeType)]?.enter)

@@ -463,7 +463,7 @@ describe('walk an object from the context', () => {
           name: 'anArray',
         },
       },
-      'enter.Object.$root.notprimitive': {
+      'enter.Primitive.$root.notprimitive': {
         node: expect.any(Date),
         info: {
           ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
@@ -476,7 +476,7 @@ describe('walk an object from the context', () => {
           name: 'notprimitive',
         },
       },
-      'Object.enter.$root.notprimitive': {
+      'Primitive.enter.$root.notprimitive': {
         node: expect.any(Date),
         info: {
           ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
@@ -489,7 +489,7 @@ describe('walk an object from the context', () => {
           name: 'notprimitive',
         },
       },
-      'leave.Object.$root.notprimitive': {
+      'leave.Primitive.$root.notprimitive': {
         node: expect.any(Date),
         info: {
           ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
@@ -502,7 +502,7 @@ describe('walk an object from the context', () => {
           name: 'notprimitive',
         },
       },
-      'Object.leave.$root.notprimitive': {
+      'Primitive.leave.$root.notprimitive': {
         node: expect.any(Date),
         info: {
           ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
