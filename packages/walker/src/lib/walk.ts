@@ -1,21 +1,15 @@
 import { Context, Action } from '@d0/core';
 import { visit } from '../utils/visit';
-import { NodeSelector } from './types';
+import { NodeSelector, Visitor } from './types';
 
-export const walk = <TVisitor = any>(
+export const walk = <T>(
   name: string,
   resolve: Function,
   selector: NodeSelector,
-  visitor: TVisitor
+  visitor: Visitor<T>
 ): Action => {
   return async (ctx: Context) => {
-    ctx[name] = visit(
-      await resolve(ctx),
-      { name: '$root', ancestors: [], path: ['$root'] },
-      selector,
-      visitor,
-      ctx
-    );
+    ctx[name] = visit<T>(await resolve(ctx), selector, visitor, ctx);
     return ctx;
   };
 };

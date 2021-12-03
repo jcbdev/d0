@@ -1,5 +1,5 @@
 import { Context } from '@d0/core';
-import { NodeSelector } from '../lib/types';
+import { NodeSelector, Visitor } from '../lib/types';
 import { walk } from '../lib/walk';
 
 describe('walk an object from the context', () => {
@@ -10,11 +10,11 @@ describe('walk an object from the context', () => {
       primitive: (node, info) => 'Primitive',
     };
 
-    const visitor = {
+    const visitor: Visitor<any> = {
       Object: {
         enter: (node, info, ctx) => {
           ctx[`Object.enter.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
         leave: (node, info, ctx) => {
           ctx[`Object.leave.${info.path.join('.')}`] = { node, info };
@@ -24,7 +24,7 @@ describe('walk an object from the context', () => {
       Array: {
         enter: (node, info, ctx) => {
           ctx[`Array.enter.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
         leave: (node, info, ctx) => {
           ctx[`Array.leave.${info.path.join('.')}`] = { node, info };
@@ -34,7 +34,7 @@ describe('walk an object from the context', () => {
       Primitive: {
         enter: (node, info, ctx) => {
           ctx[`Primitive.enter.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
         leave: (node, info, ctx) => {
           ctx[`Primitive.leave.${info.path.join('.')}`] = { node, info };
@@ -44,15 +44,15 @@ describe('walk an object from the context', () => {
       enter: {
         Object: (node, info, ctx) => {
           ctx[`enter.Object.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
         Array: (node, info, ctx) => {
           ctx[`enter.Array.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
         Primitive: (node, info, ctx) => {
           ctx[`enter.Primitive.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
       },
       leave: {

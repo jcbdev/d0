@@ -1,6 +1,6 @@
 import { Action, Context } from '@d0/core';
 import { walk } from '@d0/walker';
-import { DocumentNode } from 'graphql';
+import { ASTNode } from 'graphql';
 import { graphQLSelector } from './graphql-selector';
 import { GraphQLVisitor } from './types';
 
@@ -15,11 +15,18 @@ const reduceBy = (property: string, nodes: any[], transform: (any) => any) => {
   }, {});
 };
 
+const withOptional = (node: any, original: any, fields: string[]) => {
+  for (let field of fields) if (original[field]) node[field] = original[field];
+  return node;
+};
+
 export const graphQLSummary = (name: string, resolve: Function): Action => {
   return async (ctx: Context) => {
-    await walk<GraphQLVisitor>(name, resolve, graphQLSelector, {
+    await walk<ASTNode>(name, resolve, graphQLSelector, {
       enter: {
-        Location: node => null,
+        Location: (node, info, ctx) => ({ node: null, intention: 'REMOVE' }),
+        arguments: node => ({ node: node, intention: node.length ? 'PROCESS' : 'REMOVE' }),
+        directives: node => ({ node: node, intention: node.length ? 'PROCESS' : 'REMOVE' }),
       },
       leave: {
         ['*Value']: node => (node as any).value,
@@ -27,69 +34,96 @@ export const graphQLSummary = (name: string, resolve: Function): Action => {
         NullValue: node => null,
         ObjectValue: node => node,
 
-        // ObjectField: node => ({ name: node.name, value: node.value }),
-        ObjectField: node => node.value,
+        ObjectField: node => ({ name: node.name, value: node.value }),
+        // ObjectField: node => node.value,
 
         Name: node => node.value,
         Argument: node => ({ name: node.name, value: node.value }),
-        Directive: node => ({ name: node.name, arguments: node.arguments }),
+        Directive: node => withOptional({ name: node.name }, node, ['arguments', 'directives']),
         Document: node => node.definitions,
         NamedType: node => ({
           type: node.name, //returns the value
-          isNull: true,
-          isArray: false,
+          nullable: true,
+          array: false,
         }),
         ListType: node => ({
           ...node.type,
-          isArray: true,
+          array: true,
         }),
         NonNullType: node => ({
           //spread returned object from NamedType
           ...node.type,
-          isNull: false,
+          nullable: false,
         }),
-        InputValueDefinition: node => ({
-          //spread returned object from NamedType or NotNullType
-          ...node.type,
-          name: node.name,
-          directives: node.directives,
-        }),
-        FieldDefinition: node => ({
-          //spread returned object from NamedType or NotNullType
-          ...node.type,
-          name: node.name,
-          directives: node.directives,
-        }),
+        InputValueDefinition: node =>
+          withOptional(
+            {
+              //spread returned object from NamedType or NotNullType
+              ...node.type,
+              name: node.name,
+            },
+            node,
+            ['arguments', 'directives', 'defaultValue']
+          ),
+        FieldDefinition: node =>
+          withOptional(
+            {
+              //spread returned object from NamedType or NotNullType
+              ...node.type,
+              name: node.name,
+            },
+            node,
+            ['arguments', 'directives']
+          ),
         ScalarTypeDefinition: node => ({ type: 'Scalar', name: node.name }),
-        EnumTypeDefinition: node => ({
-          type: 'Enum',
-          name: node.name,
-          directives: node.directives,
-          values: node.values.map(v => v.name),
-        }),
-        InputObjectTypeDefinition: node => ({
-          type: 'Input',
-          name: node.name,
-          fields: node.fields,
-          directives: node.directives,
-        }),
-        ObjectTypeDefinition: node => ({
-          type: 'Object',
-          name: node.name,
-          fields: node.fields,
-          directives: node.directives,
-        }),
-        arguments: nodes => reduceBy('name', nodes, item => item.value),
+        EnumTypeDefinition: node =>
+          withOptional(
+            {
+              type: 'Enum',
+              name: node.name,
+              values: node.values.map(v => v.name),
+            },
+            node,
+            ['arguments', 'directives']
+          ),
+        InputObjectTypeDefinition: node =>
+          withOptional(
+            {
+              type: 'Input',
+              name: node.name,
+              fields: node.fields,
+            },
+            node,
+            ['arguments', 'directives']
+          ),
+        ObjectTypeDefinition: node =>
+          withOptional(
+            {
+              type: 'Object',
+              name: node.name,
+              fields: node.fields,
+            },
+            node,
+            ['arguments', 'directives']
+          ),
+        arguments: nodes => {
+          console.log(`arguments ${JSON.stringify(nodes)}`);
+          return reduceBy('name', nodes, item => item.value ?? item);
+        },
         directives: nodes => reduceBy('name', nodes, item => item),
-        // definitions: nodes => reduce(node),
-        fields: nodes => reduceBy('name', nodes, item => item),
-        // fields: nodes =>
-        //   reduceBy('name', nodes, item => {
-        //     const { name, ...otherFields } = item;
-        //     return otherFields;
-        //   }),
+        //   // definitions: nodes => reduce(node),
+        fields: (nodes, info) =>
+          info.parent.kind != 'ObjectValue'
+            ? reduceBy('name', nodes, item => item)
+            : reduceBy('name', nodes, item => item.value),
+        //   // fields: nodes =>
+        //   //   reduceBy('name', nodes, item => {
+        //   //     const { name, ...otherFields } = item;
+        //   //     return otherFields;
+        //   //   }),
+        // },
       },
-    })(ctx);
+    } as GraphQLVisitor)(ctx);
     return ctx;
   };
 };

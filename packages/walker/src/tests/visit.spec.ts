@@ -1,4 +1,5 @@
-import { NodeSelector } from '../lib/types';
+import { Context } from '@d0/core';
+import { NodeSelector, Visitor } from '../lib/types';
 import { visit } from '../utils/visit';
 
 describe('visit an object structure', () => {
@@ -9,11 +10,11 @@ describe('visit an object structure', () => {
       primitive: (node, info) => 'Primitive',
     };
 
-    const visitor = {
+    const visitor: Visitor<any> = {
       Object: {
         enter: (node, info, ctx) => {
           ctx[`Object.enter.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
         leave: (node, info, ctx) => {
           ctx[`Object.leave.${info.path.join('.')}`] = { node, info };
@@ -23,7 +24,7 @@ describe('visit an object structure', () => {
       Array: {
         enter: (node, info, ctx) => {
           ctx[`Array.enter.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
         leave: (node, info, ctx) => {
           ctx[`Array.leave.${info.path.join('.')}`] = { node, info };
@@ -33,7 +34,7 @@ describe('visit an object structure', () => {
       Primitive: {
         enter: (node, info, ctx) => {
           ctx[`Primitive.enter.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
         leave: (node, info, ctx) => {
           ctx[`Primitive.leave.${info.path.join('.')}`] = { node, info };
@@ -43,15 +44,15 @@ describe('visit an object structure', () => {
       enter: {
         Object: (node, info, ctx) => {
           ctx[`enter.Object.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
         Array: (node, info, ctx) => {
           ctx[`enter.Array.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
         Primitive: (node, info, ctx) => {
           ctx[`enter.Primitive.${info.path.join('.')}`] = { node, info };
-          return node;
+          return { node, intention: 'PROCESS' };
         },
       },
       leave: {
@@ -70,19 +71,14 @@ describe('visit an object structure', () => {
       },
     };
 
-    let ctx = {};
-    let result = visit(
+    let ctx: Context = { $tmpl: {} };
+    let result = visit<any>(
       {
         someObject: {
           test: 'string',
         },
         anArray: [1, 2, 3],
         notprimitive: new Date(),
-      },
-      {
-        name: '$root',
-        ancestors: [],
-        path: ['$root'],
       },
       selector,
       visitor,
@@ -97,6 +93,7 @@ describe('visit an object structure', () => {
     });
 
     expect(ctx).toEqual({
+      $tmpl: {},
       'enter.Object.$root': {
         node: {
           someObject: { test: 'string' },
@@ -547,7 +544,10 @@ describe('visit an object structure', () => {
       primitive: (node, info) => info.name,
     };
 
-    const visitor = {
+    const visitor: Visitor<any> = {
+      enter: {
+        remove: node => ({ node: node, intention: 'REMOVE' }),
+      },
       leave: {
         testObject: node => ({
           some: 'transform',
@@ -557,14 +557,17 @@ describe('visit an object structure', () => {
       },
     };
 
-    let ctx = { $tmpl: {} };
+    let ctx: Context = { $tmpl: {} };
     let result = visit(
       {
         testObject: { original: 'gangster' },
         someArray: ['is', 'totally', 'different'],
         aString: 'World',
+        remove: {
+          this: 'all',
+          will: ['disappear'],
+        },
       },
-      { name: '$root', path: ['$root'], ancestors: [] },
       selector,
       visitor,
       ctx
