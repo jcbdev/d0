@@ -22,7 +22,7 @@ const rndFileNameTS = () => {
 describe('Generate some typescript from a graphql source', () => {
   it('generate a type', async () => {
     let fileName = rndFileName();
-    let outFileName = rndFileName();
+    let outFileName = rndFileNameTS();
 
     await writeFile(
       fileName,
