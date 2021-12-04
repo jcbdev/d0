@@ -1,4 +1,5 @@
 export * from './lib/clear';
+export * from './lib/clearTemplate';
 export * from './lib/d0';
 export * from './lib/dynamic';
 export * from './lib/each';
@@ -6,6 +7,7 @@ export * from './lib/merge';
 export * from './lib/output';
 export * from './lib/remap';
 export * from './lib/repeat';
+export * from './lib/reset';
 export * from './lib/resolve';
 export * from './lib/sequence';
 export * from './lib/set';
