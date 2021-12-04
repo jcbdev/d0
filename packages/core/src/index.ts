@@ -9,6 +9,7 @@ export * from './lib/repeat';
 export * from './lib/resolve';
 export * from './lib/sequence';
 export * from './lib/set';
+export * from './lib/split';
 export * from './lib/template';
 export * from './lib/types';
 export * from './lib/when';
