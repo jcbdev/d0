@@ -1,27 +1,29 @@
-import { sequence } from '../lib/sequence';
-import { Action } from '../lib/types';
+import { sequence } from '../lib/d0s/sequence';
+import { Action, Context } from '../lib/types';
+import { clearProps } from './helpers/clear-props';
 
 describe('execute a set of template actions in a sequence', () => {
   it('should run sequence and resolve', async () => {
-    let mockAction1: Action = ctx => {
+    let mockAction1: Action<Context> = ctx => {
       ctx['count'] = 1;
       return ctx;
     };
-    let mockAction2: Action = ctx => {
+    let mockAction2: Action<Context> = ctx => {
       ctx['count']++;
       ctx['newvalue'] = true;
       return ctx;
     };
-    let mockAction3: Action = ctx => {
+    let mockAction3: Action<Context> = ctx => {
       ctx['count']++;
-      ctx.$tmpl['template'] = 'TAADAA';
+      ctx['template'] = 'TAADAA';
       return ctx;
     };
 
-    let actions: Action[] = [mockAction1, mockAction2, mockAction3];
-    let result = await sequence(actions)({ $tmpl: {} });
+    let actions: Action<Context>[] = [mockAction1, mockAction2, mockAction3];
+    let result = await sequence(actions)({} as any);
+    result = clearProps(result, '$d0', '$item');
     expect(result).toEqual({
-      $tmpl: { template: 'TAADAA' },
+      template: 'TAADAA',
       count: 3,
       newvalue: true,
     });

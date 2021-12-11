@@ -1,12 +1,14 @@
 {
   "version": 2,
   "projects": {
+    "code": "packages/code",
     "core": "packages/core",
     "e2e-tests": "packages/e2e-tests",
-    "from-json": "packages/from-json",
-    "from-yaml": "packages/from-yaml",
+    "from": "packages/from",
     "graphql": "packages/graphql",
     "prettier": "packages/prettier",
+    "pull": "packages/pull",
+    "typescript": "packages/typescript",
     "walker": "packages/walker"
   }
 }

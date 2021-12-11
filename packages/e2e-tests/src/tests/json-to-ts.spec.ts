@@ -1,5 +1,5 @@
 import { d0, output, sequence, template, resolve } from '@d0/core';
-import { fromJson } from '@d0/from-json';
+import { fromJson } from '@d0/from';
 import { pretty } from '@d0/prettier';
 import { writeFile, readFile } from 'fs/promises';
 import path from 'path';

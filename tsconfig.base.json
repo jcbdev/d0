@@ -16,12 +16,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@d0/code": ["packages/code/src/index.ts"],
       "@d0/core": ["packages/core/src/index.ts"],
       "@d0/e2e-tests": ["packages/e2e-tests/src/index.ts"],
-      "@d0/from-json": ["packages/from-json/src/index.ts"],
-      "@d0/from-yaml": ["packages/from-yaml/src/index.ts"],
+      "@d0/from": ["packages/from/src/index.ts"],
       "@d0/graphql": ["packages/graphql/src/index.ts"],
       "@d0/prettier": ["packages/prettier/src/index.ts"],
+      "@d0/pull": ["packages/pull/src/index.ts"],
+      "@d0/typescript": ["packages/typescript/src/index.ts"],
       "@d0/walker": ["packages/walker/src/index.ts"]
     }
   },

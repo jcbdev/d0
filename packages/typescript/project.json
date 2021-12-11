@@ -1,0 +1,34 @@
+{
+  "root": "packages/typescript",
+  "sourceRoot": "packages/typescript/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/typescript/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/typescript"],
+      "options": {
+        "jestConfig": "packages/typescript/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "build": {
+      "executor": "@nrwl/node:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/typescript",
+        "tsConfig": "packages/typescript/tsconfig.lib.json",
+        "packageJson": "packages/typescript/package.json",
+        "main": "packages/typescript/src/index.ts",
+        "assets": ["packages/typescript/*.md"]
+      }
+    }
+  },
+  "tags": ["scope:public", "type:util", "target:all"]
+}

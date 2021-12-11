@@ -1,16 +1,15 @@
-import { repeat } from '../lib/repeat';
-import { Action } from '../lib/types';
+import { repeat } from '../lib/d0s/repeat';
+import { Action, Context } from '../lib/types';
 
 describe('repeat an action unconditionally', () => {
   it('should run true action', async () => {
-    let repeatAction: Action = ctx => {
+    let repeatAction: Action<Context> = ctx => {
       ctx['count']++;
       return ctx;
     };
 
-    let result = await repeat(100, repeatAction)({ $tmpl: {}, count: 0 });
+    let result = await repeat(100, repeatAction)({ count: 0 } as any);
     expect(result).toEqual({
-      $tmpl: {},
       count: 100,
     });
   });

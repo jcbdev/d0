@@ -1,4 +1,4 @@
-import { output } from '../lib/output';
+import { output } from '../lib/d0s/output';
 import { readFile } from 'fs/promises';
 import path from 'path';
 import os from 'os';
@@ -16,7 +16,7 @@ describe('should save text to file', () => {
       `${(Math.random() + 1).toString(36).substring(7)}-${(Math.random() + 1).toString(36).substring(7)}.json`
     );
 
-    let result = await output(rndFile, () => outputJson)({ $tmpl: {} });
+    let result = await output(rndFile, () => outputJson)({} as any);
 
     let resultJson = JSON.parse(await readFile(rndFile, 'utf8'));
     expect(resultJson).toEqual({

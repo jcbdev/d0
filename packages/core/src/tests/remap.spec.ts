@@ -1,16 +1,15 @@
-import { remap } from '../lib/remap';
+import { remap } from '../lib/d0s/remap';
+import { ContextWith } from '../lib/types';
 
 describe('remap the context', () => {
   it('should remap the context based on the update function', async () => {
-    let action = remap(ctx => {
+    let action = remap<any, ContextWith<{ keep: string }>>(ctx => {
       return {
-        $tmpl: {},
         keep: ctx.keep,
-      };
+      } as any;
     });
-    let result = await action({ $tmpl: { should: 'be gone!' }, keep: 'this', notThis: 123 });
+    let result = await action({ keep: 'this', notThis: 123 } as any);
     expect(result).toEqual({
-      $tmpl: {},
       keep: 'this',
     });
   });
