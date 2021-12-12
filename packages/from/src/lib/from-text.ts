@@ -1,9 +1,12 @@
-import { Action, Context } from '@d0/core';
+import { D0 } from '@d0/core';
 import { FileHandle, readFile } from 'fs/promises';
 import { PathLike } from 'fs';
 
-export const fromText = (name: string, path: PathLike | FileHandle): Action => {
-  return async (ctx: Context) => {
+export const fromText = <TFlex = void, TBase = void>(
+  name: string,
+  path: PathLike | FileHandle
+): D0<TFlex, TBase> => {
+  return async ctx => {
     const text = await readFile(path, 'utf8');
     ctx[name] = text;
     return ctx;

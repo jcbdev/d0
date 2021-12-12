@@ -2,12 +2,12 @@ import { httpText } from '../lib/http-text';
 
 describe('pull', () => {
   it('should retrieve http text', async () => {
-    let ctx = { $tmpl: {} };
+    let ctx = {};
 
     ctx = await httpText('raw', 'https://raw.githubusercontent.com/jcbdev/d0/main/LICENSE.md')(ctx);
     expect(ctx['raw']).toBe(`MIT License
 
-Copyright (c) [year] [fullname]
+Copyright (c) 2021 James Carl Barker
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

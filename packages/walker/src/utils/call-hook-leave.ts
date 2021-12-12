@@ -1,13 +1,13 @@
-import { Context } from '@d0/core';
+import { Ctx } from '@d0/core';
 import { NodeInfo, Visitor } from '../lib/types';
 import matchProp from './match-prop';
 
-export default <T = any>(
+export default <T = any, TCtx = Ctx>(
   nodeType: string,
   node: T,
   info: NodeInfo,
-  ctx: Context,
-  visitor: Visitor<T>
+  ctx: TCtx,
+  visitor: Visitor<T, TCtx>
 ): any => {
   if (visitor.leave && matchProp(visitor.leave, nodeType))
     node = visitor.leave[matchProp(visitor.leave, nodeType)](node, info, ctx);

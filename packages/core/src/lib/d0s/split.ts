@@ -1,16 +1,15 @@
-import { MergeAction, Action, Ctx } from '../types';
+import { MergeD0, D0, Ctx } from '../types';
 
-export const split = <TFlex = void, T = void, TD0 = void>(
-  fork: MergeAction<TFlex, Ctx<TFlex, T, TD0>>,
-  action: Action<TFlex, T, TD0>,
-  merge: MergeAction<TFlex, Ctx<TFlex, T, TD0>>
-): Action<TFlex, T, TD0> => {
+export const split = <TFlex = void, TBase = void>(
+  fork: MergeD0<TFlex, TBase>,
+  d0: D0<TFlex, TBase>,
+  merge: MergeD0<TFlex, TBase>
+): D0<TFlex, TBase> => {
   return async ctx => {
-    let newCtx: any = { $d0: ctx.$d0, $item: ctx };
-    newCtx = await fork(newCtx);
-    newCtx = await action(newCtx);
-    ctx.$item = newCtx;
-    ctx = await merge(ctx as any);
+    let newCtx: Ctx<TFlex, TBase> = {} as any;
+    newCtx = await fork(ctx, newCtx);
+    newCtx = await d0(newCtx);
+    ctx = await merge(newCtx, ctx);
     return ctx;
   };
 };

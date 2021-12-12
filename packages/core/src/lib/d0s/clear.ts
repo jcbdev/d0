@@ -1,6 +1,6 @@
-import { Action } from '../types';
+import { D0 } from '../types';
 
-export const clear = <TFlex = void, T = void, TD0 = void>(name: string): Action<TFlex, T, TD0> => {
+export const clear = <TFlex = void, TBase = void>(name: string): D0<TFlex, TBase> => {
   return ctx => {
     delete ctx[name];
     return ctx;

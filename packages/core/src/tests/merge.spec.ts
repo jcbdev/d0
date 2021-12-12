@@ -1,5 +1,4 @@
 import { merge } from '../lib/d0s/merge';
-import { Context } from '../lib/types';
 
 describe('merge two contexts', () => {
   it('should merge two contexts', async () => {

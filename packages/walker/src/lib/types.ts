@@ -1,4 +1,4 @@
-import { Context } from '@d0/core';
+import { Ctx } from '@d0/core';
 
 export type NodeSelector = {
   array: (node: any, info?: NodeInfo) => string;
@@ -19,17 +19,19 @@ export type NodeInfo = {
   ancestors?: ReadonlyArray<any | any[]>;
 };
 
-export type Visitor<T = any> = FlexVisitor<T> & FlexEnterLeaveVisitor<T>;
+export type Visitor<T = any, TCtx = Ctx<'Flex'>> = FlexVisitor<T, TCtx> | FlexEnterLeaveVisitor<T, TCtx>;
 
-export type FlexVisitor<T = any> = {
-  enter?: Record<string, (node: T | T[], info: NodeInfo, ctx: Context) => VisitIntention<T | T[]>>;
-  leave?: Record<string, (node: T | T[], info: NodeInfo, ctx: Context) => any>;
+export type FlexVisitor<T = any, TCtx = Ctx<'Flex'>> = {
+  enter?: { [P: string]: EnterNode<T, TCtx> };
+  leave?: { [P: string]: LeaveNode<T, TCtx> };
 };
 
-export type FlexEnterLeaveVisitor<T = any> = Record<
-  string,
-  {
-    enter?: (node: T | T[], info: NodeInfo, ctx: Context) => VisitIntention<T | T[]>;
-    leave?: (node: T | T[], info: NodeInfo, ctx: Context) => any;
-  }
->;
+export type FlexEnterLeaveVisitor<T = any, TCtx = Ctx<'Flex'>> = {
+  [P: string]: {
+    enter?: EnterNode<T, TCtx>;
+    leave?: LeaveNode<T, TCtx>;
+  };
+};
+
+export type EnterNode<T, TCtx> = (node: T | T[], info: NodeInfo, ctx: TCtx) => VisitIntention<T | T[]>;
+export type LeaveNode<T, TCtx> = (node: T | T[], info: NodeInfo, ctx: TCtx) => any;

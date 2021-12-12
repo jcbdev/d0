@@ -1,50 +1,50 @@
 import { when } from '../lib/d0s/when';
-import { Action, Context } from '../lib/types';
+import { D0 } from '../lib/types';
 
-describe('conditionally execute an action', () => {
-  it('should run true action', async () => {
-    let trueAction: Action<Context> = ctx => {
+describe('conditionally execute an D0', () => {
+  it('should run true D0', async () => {
+    let trueD0: D0<'Flex'> = ctx => {
       ctx['result'] = true;
       return ctx;
     };
-    let falseAction: Action<Context> = ctx => {
+    let falseD0: D0<'Flex'> = ctx => {
       ctx['result'] = false;
       return ctx;
     };
 
-    let result = await when(() => true, trueAction, falseAction)({} as any);
+    let result = await when(() => true, trueD0, falseD0)({} as any);
     expect(result).toMatchObject({
       result: true,
     });
   });
 
-  it('should run false action', async () => {
-    let trueAction: Action<Context> = ctx => {
+  it('should run false D0', async () => {
+    let trueD0: D0<'Flex'> = ctx => {
       ctx['result'] = true;
       return ctx;
     };
-    let falseAction: Action<Context> = ctx => {
+    let falseD0: D0<'Flex'> = ctx => {
       ctx['result'] = false;
       return ctx;
     };
 
-    let result = await when(() => false, trueAction, falseAction)({} as any);
+    let result = await when(() => false, trueD0, falseD0)({} as any);
     expect(result).toMatchObject({
       result: false,
     });
   });
 
-  it('condition has access to context', async () => {
-    let trueAction: Action<Context> = ctx => {
+  it('condition has access to ctx', async () => {
+    let trueD0: D0<'Flex'> = ctx => {
       ctx['result'] = true;
       return ctx;
     };
-    let falseAction: Action<Context> = ctx => {
+    let falseD0: D0<'Flex'> = ctx => {
       ctx['result'] = false;
       return ctx;
     };
 
-    let result = await when(ctx => ctx['test'], trueAction, falseAction)({ test: true } as any);
+    let result = await when(ctx => ctx['test'], trueD0, falseD0)({ test: true } as any);
     expect(result).toEqual({
       result: true,
       test: true,

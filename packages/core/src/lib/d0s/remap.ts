@@ -1,8 +1,6 @@
-import { Action } from '../types';
+import { D0 } from '../types';
 
-export const remap = <TFlex = void, T = void, TD0 = void>(
-  update?: Action<TFlex, T, TD0>
-): Action<TFlex, T, TD0> => {
+export const remap = <TFlex = void, TBase = void>(update?: D0<TFlex, TBase>): D0<TFlex, TBase> => {
   return async ctx => {
     ctx = await update(ctx);
     return ctx;

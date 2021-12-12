@@ -1,11 +1,11 @@
-import { Action, ResolveAction } from '../types';
+import { D0, ResolveD0 } from '../types';
 import { FileHandle, writeFile } from 'fs/promises';
 import { PathLike } from 'fs';
 
-export const output = <TFlex = void, T = void, TD0 = void>(
+export const output = <TFlex = void, TBase = void>(
   path: PathLike | FileHandle,
-  resolve: ResolveAction<string, TFlex, T, TD0>
-): Action<TFlex, T, TD0> => {
+  resolve: ResolveD0<string, TFlex, TBase>
+): D0<TFlex, TBase> => {
   return async ctx => {
     await writeFile(path, await resolve(ctx));
     return ctx;

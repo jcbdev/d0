@@ -1,4 +1,3 @@
-import { Context } from '@d0/core';
 import { NodeSelector, Visitor } from '../lib/types';
 import { visit } from '../utils/visit';
 
@@ -71,7 +70,7 @@ describe('visit an object structure', () => {
       },
     };
 
-    let ctx: Context = { $tmpl: {} };
+    let ctx = {};
     let result = visit<any>(
       {
         someObject: {
@@ -93,7 +92,6 @@ describe('visit an object structure', () => {
     });
 
     expect(ctx).toEqual({
-      $tmpl: {},
       'enter.Object.$root': {
         node: {
           someObject: { test: 'string' },
@@ -557,7 +555,7 @@ describe('visit an object structure', () => {
       },
     };
 
-    let ctx: Context = { $tmpl: {} };
+    let ctx = {};
     let result = visit(
       {
         testObject: { original: 'gangster' },

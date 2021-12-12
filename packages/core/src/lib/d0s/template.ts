@@ -1,9 +1,9 @@
-import { Action, ResolveAction } from '../types';
+import { D0, ResolveD0 } from '../types';
 
-export const template = <TFlex = void, T = void, TD0 = void>(
+export const template = <TFlex = void, TBase = void>(
   name: string,
-  template: ResolveAction<string, TFlex, T, TD0>
-): Action<TFlex, T, TD0> => {
+  template: ResolveD0<string, TFlex, TBase>
+): D0<TFlex, TBase> => {
   return async ctx => {
     ctx[name] = await template(ctx);
     return ctx;

@@ -1,4 +1,3 @@
-import { Context, ContextWith, FlexContext } from '..';
 import { template } from '../lib/d0s/template';
 
 describe('template literal templating', () => {

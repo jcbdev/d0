@@ -1,5 +1,4 @@
 import { resolve } from '../lib/d0s/resolve';
-import { Action, Context } from '../lib/types';
 
 describe('resolve a final value from a context', () => {
   it('should resolve', async () => {

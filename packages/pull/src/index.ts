@@ -1,2 +1,22 @@
-export * from './lib/http-text';
-export * from './lib/http-json';
+export { httpText } from './lib/http-text';
+export { httpJson } from './lib/http-json';
+import { httpText } from './lib/http-text';
+import { httpJson } from './lib/http-json';
+import { D0, Or } from '@d0/core';
+
+export type PullD0s<DFlex = void, DBase = void> = {
+  httpJson: <TFlex = DFlex, TBase = DBase>(name: string, url: string) => D0<TFlex, TBase>;
+  httpText: <TFlex = DFlex, TBase = DBase>(name: string, url: string) => D0<TFlex, TBase>;
+};
+
+export const pullD0s: <DFlex = void, DBase = void>() => PullD0s<DFlex, DBase> = <
+  DFlex = void,
+  DBase = void
+>() => {
+  return {
+    httpJson: <TFlex = DFlex, TBase = DBase>(name: string, url: string) =>
+      httpJson<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, url),
+    httpText: <TFlex = DFlex, TBase = DBase>(name: string, url: string) =>
+      httpText<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, url),
+  } as PullD0s<DFlex, DBase>;
+};

@@ -1,4 +1,3 @@
-import { Context } from '@d0/core';
 import { NodeSelector, Visitor } from '../lib/types';
 import { walk } from '../lib/walk';
 
@@ -71,8 +70,7 @@ describe('walk an object from the context', () => {
       },
     };
 
-    let ctx: Context = {
-      $tmpl: {},
+    let ctx: any = {
       theNode: {
         someObject: {
           test: 'string',
@@ -81,11 +79,10 @@ describe('walk an object from the context', () => {
         notprimitive: new Date(),
       },
     };
-    ctx = await walk('result', ({ theNode }: { theNode: any }) => theNode, selector, visitor)(ctx);
+    ctx = await walk<'Flex'>('result', ({ theNode }: { theNode: any }) => theNode, selector, visitor)(ctx);
     // console.log(JSON.stringify(ctx));
 
     expect(ctx).toMatchObject({
-      $tmpl: {},
       theNode: {
         someObject: { test: 'string' },
         anArray: [1, 2, 3],

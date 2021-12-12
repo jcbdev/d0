@@ -1,13 +1,13 @@
-import { Context } from '@d0/core';
+import { Ctx } from '@d0/core';
 import { NodeInfo, VisitIntention, Visitor } from '../lib/types';
 import matchProp from './match-prop';
 
-export default <T = any>(
+export default <T = any, TCtx = Ctx>(
   nodeType: string,
   node: T,
   info: NodeInfo,
-  ctx: Context,
-  visitor: Visitor<T>
+  ctx: TCtx,
+  visitor: Visitor<T, TCtx>
 ): VisitIntention<T> => {
   let intention: VisitIntention<T> = {
     node: node,

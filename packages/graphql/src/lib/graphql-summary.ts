@@ -1,4 +1,4 @@
-import { Action, Context } from '@d0/core';
+import { D0 } from '@d0/core';
 import { walk } from '@d0/walker';
 import { ASTNode } from 'graphql';
 import { graphQLSelector } from './graphql-selector';
@@ -20,8 +20,11 @@ const withOptional = (node: any, original: any, fields: string[]) => {
   return node;
 };
 
-export const graphQLSummary = (name: string, resolve: Function): Action => {
-  return async (ctx: Context) => {
+export const graphQLSummary = <TFlex = void, TBase = void>(
+  name: string,
+  resolve: Function
+): D0<TFlex, TBase> => {
+  return async ctx => {
     await walk<ASTNode>(name, resolve, graphQLSelector, {
       enter: {
         Location: (node, info, ctx) => ({ node: null, intention: 'REMOVE' }),

@@ -3,18 +3,24 @@ import isArray from './is-array';
 import { NodeInfo, NodeSelector, VisitIntention, Visitor } from '../lib/types';
 import callHookLeave from './call-hook-leave';
 import callHookEnter from './call-hook-enter';
-import { Context } from '@d0/core';
+import { Ctx } from '@d0/core';
 
-export const visit = <T = any>(node: T | T[], selector: NodeSelector, visitor: Visitor<T>, ctx: Context) => {
-  return visitNode<T>(node, { name: '$root', path: ['$root'], ancestors: [] }, selector, visitor, ctx).node;
+export const visit = <T = any, TCtx = Ctx>(
+  node: T | T[],
+  selector: NodeSelector,
+  visitor: Visitor<T>,
+  ctx: TCtx
+) => {
+  return visitNode<T, TCtx>(node, { name: '$root', path: ['$root'], ancestors: [] }, selector, visitor, ctx)
+    .node;
 };
 
-const visitNode = <T = any>(
+const visitNode = <T = any, TCtx = Ctx>(
   node: T | T[],
   info: NodeInfo,
   selector: NodeSelector,
-  visitor: Visitor<T>,
-  ctx: Context
+  visitor: Visitor<T, TCtx>,
+  ctx: TCtx
 ) => {
   let nodeType;
   let newNode;
@@ -33,34 +39,34 @@ const visitNode = <T = any>(
   }
 
   //Call entry hook
-  let intention = callHookEnter<T>(nodeType, newNode, info, ctx, visitor);
+  let intention = callHookEnter<T, TCtx>(nodeType, newNode, info, ctx, visitor);
   // console.log(newNode);
 
   // recursively visit arrays and objects
   if (intention.intention === 'PROCESS') {
     if (isArray(node)) {
-      newNode = visitArray<T>(newNode, info, selector, visitor, ctx);
+      newNode = visitArray<T, TCtx>(newNode, info, selector, visitor, ctx);
     } else if (isObject(node) && Object.prototype.toString.call(node) === '[object Object]') {
-      newNode = visitObject<T>(newNode, info, selector, visitor, ctx);
+      newNode = visitObject<T, TCtx>(newNode, info, selector, visitor, ctx);
     }
 
     //Call leave hook
-    newNode = callHookLeave<T>(nodeType, newNode, info, ctx, visitor);
+    newNode = callHookLeave<T, TCtx>(nodeType, newNode, info, ctx, visitor);
     intention.node = newNode;
   }
   // console.log(intention);
   return intention;
 };
 
-const visitArray = <T = any>(
+const visitArray = <T = any, TCtx = Ctx>(
   nodes: T[],
   info: NodeInfo,
   selector: NodeSelector,
-  visitor: Visitor<T>,
-  ctx: Context
+  visitor: Visitor<T, TCtx>,
+  ctx: TCtx
 ): any[] => {
   let newNodes = nodes?.map((n, index) =>
-    visitNode<T>(
+    visitNode<T, TCtx>(
       n,
       { ...info, ancestors: [...info.ancestors, nodes], path: [...info.path, index], index },
       selector,
@@ -73,12 +79,12 @@ const visitArray = <T = any>(
   return rnewNodes;
 };
 
-const visitObject = <T = any>(
+const visitObject = <T = any, TCtx = Ctx>(
   node: T,
   info: NodeInfo,
   selector: NodeSelector,
-  visitor: Visitor<T>,
-  ctx: Context
+  visitor: Visitor<T, TCtx>,
+  ctx: TCtx
 ): any => {
   let newInfo: NodeInfo = {
     ancestors: [...info.ancestors, node],
@@ -90,7 +96,13 @@ const visitObject = <T = any>(
     .map(([k, v]) => {
       return [
         k,
-        visitNode<T>(v as T, { ...newInfo, path: [...newInfo.path, k], name: k }, selector, visitor, ctx),
+        visitNode<T, TCtx>(
+          v as T,
+          { ...newInfo, path: [...newInfo.path, k], name: k },
+          selector,
+          visitor,
+          ctx
+        ),
       ] as [string, VisitIntention<T>];
     })
     .filter(([k, v]) => v.intention != 'REMOVE')

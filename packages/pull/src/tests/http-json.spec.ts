@@ -2,7 +2,7 @@ import { httpJson } from '../lib/http-json';
 
 describe('pull', () => {
   it('should retrieve http text', async () => {
-    let ctx = { $tmpl: {} };
+    let ctx = {};
 
     ctx = await httpJson(
       'json',

@@ -1,26 +1,24 @@
 import { split } from '../lib/d0s/split';
-import { Action, Context } from '../lib/types';
-import { clearProps } from './helpers/clear-props';
+import { D0 } from '../lib/types';
 
-describe('execute an action in isolated context', () => {
+describe('execute an D0 in isolated context', () => {
   it('should isolate and remerge context', async () => {
-    let mockAction1: Action<Context> = ctx => {
+    let mockD01: D0<'Flex'> = ctx => {
       ctx['exists'] = ctx['original'] ?? false;
       return ctx;
     };
 
     let result = await split(
-      ctx => {
-        return ctx;
+      (source, target) => {
+        return target;
       },
-      mockAction1,
-      ctx => {
-        ctx['exists'] = ctx.$item['exists'];
-        return ctx;
+      mockD01,
+      (source, target) => {
+        target['exists'] = source['exists'];
+        return target;
       }
-    )({ original: true } as any);
+    )({ original: true });
 
-    result = clearProps(result, '$d0', '$item');
     expect(result).toEqual({
       exists: false,
       original: true,

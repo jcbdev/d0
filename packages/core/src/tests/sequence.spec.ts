@@ -1,27 +1,26 @@
 import { sequence } from '../lib/d0s/sequence';
-import { Action, Context } from '../lib/types';
-import { clearProps } from './helpers/clear-props';
+import { D0 } from '../lib/types';
 
-describe('execute a set of template actions in a sequence', () => {
+describe('execute a set of template D0s in a sequence', () => {
   it('should run sequence and resolve', async () => {
-    let mockAction1: Action<Context> = ctx => {
+    let mockD01: D0<'Flex'> = ctx => {
       ctx['count'] = 1;
       return ctx;
     };
-    let mockAction2: Action<Context> = ctx => {
+    let mockD02: D0<'Flex'> = ctx => {
       ctx['count']++;
       ctx['newvalue'] = true;
       return ctx;
     };
-    let mockAction3: Action<Context> = ctx => {
+    let mockD03: D0<'Flex'> = ctx => {
       ctx['count']++;
       ctx['template'] = 'TAADAA';
       return ctx;
     };
 
-    let actions: Action<Context>[] = [mockAction1, mockAction2, mockAction3];
-    let result = await sequence(actions)({} as any);
-    result = clearProps(result, '$d0', '$item');
+    let D0s: D0<'Flex'>[] = [mockD01, mockD02, mockD03];
+    let result = await sequence(D0s)({});
+
     expect(result).toEqual({
       template: 'TAADAA',
       count: 3,

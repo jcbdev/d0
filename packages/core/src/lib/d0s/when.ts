@@ -1,13 +1,13 @@
-import { Action, ConditionAction } from '../types';
+import { D0, ConditionD0 } from '../types';
 
-export const when = <TFlex = void, T = void, TD0 = void>(
-  condition: ConditionAction<TFlex, T, TD0>,
-  trueAction: Action<TFlex, T, TD0>,
-  falseAction: Action<TFlex, T, TD0>
-): Action<TFlex, T, TD0> => {
+export const when = <TFlex = void, TBase = void>(
+  condition: ConditionD0<TFlex, TBase>,
+  trueD0: D0<TFlex, TBase>,
+  falseD0: D0<TFlex, TBase>
+): D0<TFlex, TBase> => {
   return async ctx => {
-    if (await condition(ctx)) ctx = await trueAction(ctx);
-    else ctx = await falseAction(ctx);
+    if (await condition(ctx)) ctx = await trueD0(ctx);
+    else ctx = await falseD0(ctx);
     return ctx;
   };
 };
