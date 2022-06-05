@@ -1,4 +1,3 @@
-import { Context } from '@d0/core';
 import { Location } from 'graphql';
 import { loadGraphQL } from '../lib/load-graphql';
 import path from 'path';
@@ -21,11 +20,10 @@ type test
     );
     await writeFile(rndFile, gql);
 
-    let ctx: Context = { $tmpl: {} };
+    let ctx: any = {};
     ctx = await loadGraphQL('ast', rndFile)(ctx);
 
     expect(ctx).toMatchObject({
-      $tmpl: {},
       ast: {
         kind: 'Document',
         definitions: [

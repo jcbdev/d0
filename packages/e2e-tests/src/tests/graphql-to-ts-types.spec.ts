@@ -95,7 +95,7 @@ type Comment {
           }
           return ts;
         }),
-        pretty('result', ctx => ctx.$tmpl.typescript, { parser: 'typescript', filepath: '1.ts' }),
+        pretty('result', ctx => ctx.typescript, { parser: 'typescript', filepath: '1.ts' }),
         output(outFileName, ctx => ctx.result),
       ])
     );

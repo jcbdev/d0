@@ -4,74 +4,105 @@ import { NodeInfo, NodeSelector, VisitIntention, Visitor } from '../lib/types';
 import callHookLeave from './call-hook-leave';
 import callHookEnter from './call-hook-enter';
 import { Ctx } from '@d0/core';
+import cloneDeep from 'clone-deep';
 
-export const visit = <T = any, TCtx = Ctx>(
+export const visit = async <T = any, TCtx = Ctx>(
   node: T | T[],
   selector: NodeSelector,
   visitor: Visitor<T>,
-  ctx: TCtx
+  ctx: TCtx,
+  info?: NodeInfo
 ) => {
-  return visitNode<T, TCtx>(node, { name: '$root', path: ['$root'], ancestors: [] }, selector, visitor, ctx)
-    .node;
+  return (
+    await visitNode<T, TCtx>(
+      node,
+      info ?? {
+        name: '$root',
+        path: ['$root'],
+        pathAncestors: [],
+        nodeAncestors: [],
+        nodeType: 'object',
+        selector: '$root',
+      },
+      selector,
+      visitor,
+      ctx
+    )
+  ).node;
 };
 
-const visitNode = <T = any, TCtx = Ctx>(
+const visitNode = async <T = any, TCtx = Ctx>(
   node: T | T[],
   info: NodeInfo,
   selector: NodeSelector,
   visitor: Visitor<T, TCtx>,
   ctx: TCtx
 ) => {
-  let nodeType;
+  // let nodeType;
   let newNode;
 
   //Init object clone and type
   if (isArray(node)) {
-    nodeType = selector.array(node, info);
+    info.nodeType = 'array';
+    // info.selector
+    info.selector = selector.array(node, info);
     newNode = [...(node as T[])];
   } else if (isObject(node) && Object.prototype.toString.call(node) === '[object Object]') {
-    nodeType = selector.object(node, info);
+    info.nodeType = 'object';
+    info.selector = selector.object(node, info);
     newNode = { ...node };
   } else {
-    nodeType = selector.primitive(node, info);
+    info.nodeType = 'primitive';
+    info.selector = selector.primitive(node, info);
     newNode = node;
-    if (isObject(node)) newNode = Object.assign(Object.create(Object.getPrototypeOf(node)), node);
+    if (isObject(node)) {
+      newNode = cloneDeep(node);
+    }
   }
 
   //Call entry hook
-  let intention = callHookEnter<T, TCtx>(nodeType, newNode, info, ctx, visitor);
+  let intention = await callHookEnter<T, TCtx>(info.selector, newNode, info, ctx, visitor);
   // console.log(newNode);
 
   // recursively visit arrays and objects
   if (intention.intention === 'PROCESS') {
-    if (isArray(node)) {
-      newNode = visitArray<T, TCtx>(newNode, info, selector, visitor, ctx);
-    } else if (isObject(node) && Object.prototype.toString.call(node) === '[object Object]') {
-      newNode = visitObject<T, TCtx>(newNode, info, selector, visitor, ctx);
+    newNode = intention.node;
+    // console.log(newNode);
+    if (info.nodeType == 'array') {
+      newNode = await visitArray<T, TCtx>(newNode, info, selector, visitor, ctx);
+    } else if (info.nodeType == 'object') {
+      newNode = await visitObject<T, TCtx>(newNode, info, selector, visitor, ctx);
     }
 
     //Call leave hook
-    newNode = callHookLeave<T, TCtx>(nodeType, newNode, info, ctx, visitor);
+    newNode = await callHookLeave<T, TCtx>(info.selector, newNode, info, ctx, visitor);
     intention.node = newNode;
   }
-  // console.log(intention);
   return intention;
 };
 
-const visitArray = <T = any, TCtx = Ctx>(
+const visitArray = async <T = any, TCtx = Ctx>(
   nodes: T[],
   info: NodeInfo,
   selector: NodeSelector,
   visitor: Visitor<T, TCtx>,
   ctx: TCtx
-): any[] => {
-  let newNodes = nodes?.map((n, index) =>
-    visitNode<T, TCtx>(
-      n,
-      { ...info, ancestors: [...info.ancestors, nodes], path: [...info.path, index], index },
-      selector,
-      visitor,
-      ctx
+): Promise<any[]> => {
+  let newNodes = await Promise.all(
+    nodes?.map(
+      async (n, index) =>
+        await visitNode<T, TCtx>(
+          n,
+          {
+            ...info,
+            pathAncestors: [...info.pathAncestors, nodes],
+            path: [...info.path, index],
+            index,
+          },
+          selector,
+          visitor,
+          ctx
+        )
     )
   );
   let rnewNodes = newNodes.filter(n => n.intention != 'REMOVE').map(n => n.node);
@@ -79,32 +110,43 @@ const visitArray = <T = any, TCtx = Ctx>(
   return rnewNodes;
 };
 
-const visitObject = <T = any, TCtx = Ctx>(
+const visitObject = async <T = any, TCtx = Ctx>(
   node: T,
   info: NodeInfo,
   selector: NodeSelector,
   visitor: Visitor<T, TCtx>,
   ctx: TCtx
-): any => {
+): Promise<any> => {
   let newInfo: NodeInfo = {
-    ancestors: [...info.ancestors, node],
+    pathAncestors: [...info.pathAncestors, node],
+    // nodeAncestors: [],
+    nodeAncestors: [...info.nodeAncestors, node],
     path: [...info.path],
+    nodeType: 'object',
+    selector: info.selector,
     parent: node,
   };
 
-  let newNodes = Object.entries(node)
-    .map(([k, v]) => {
-      return [
-        k,
-        visitNode<T, TCtx>(
-          v as T,
-          { ...newInfo, path: [...newInfo.path, k], name: k },
-          selector,
-          visitor,
-          ctx
-        ),
-      ] as [string, VisitIntention<T>];
-    })
+  let newNodes = (
+    await Promise.all(
+      Object.entries(node).map(async ([k, v]) => {
+        return [
+          k,
+          await visitNode<T, TCtx>(
+            v as T,
+            {
+              ...newInfo,
+              path: [...newInfo.path, k],
+              name: k,
+            },
+            selector,
+            visitor,
+            ctx
+          ),
+        ] as [string, VisitIntention<T>];
+      })
+    )
+  )
     .filter(([k, v]) => v.intention != 'REMOVE')
     .map(([k, v]) => [k, v.node] as [string, T])
     .reduce(

@@ -18,8 +18,7 @@ describe('call hooks on visitor', () => {
   it('should call an enter hook by name if exist on enter structure', () => {
     const visitor: Visitor<string, string> = {
       enter: {
-        test: (node, info, ctx) =>
-          ({ node: `${node} ${info.name}${ctx}`, intention: 'PROCESS' } as VisitIntention<string | string[]>),
+        test: (node, info, ctx) => ({ node: `${node} ${info.name}${ctx}`, intention: 'PROCESS' } as any),
       },
     };
 

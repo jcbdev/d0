@@ -1,14 +1,11 @@
-import { Context } from '@d0/core';
 import { pretty } from '../lib/pretty';
 
 describe('prettier formatting of code', () => {
   it('should run prettier on a typescript input', async () => {
-    let ctx: Context = {
-      $tmpl: {
-        transformed: `type hello={id:string;test:string}`,
-      },
+    let ctx: any = {
+      transformed: `type hello={id:string;test:string}`,
     };
-    let result = await pretty('pretty', ctx => ctx.$tmpl.transformed, {
+    let result = await pretty<'Flex'>('pretty', ctx => ctx.transformed, {
       parser: 'typescript',
       filepath: 'test.ts',
       printWidth: 20,

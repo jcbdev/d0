@@ -1,56 +1,71 @@
-import {
-  CodeAdapter,
-  CodeContext,
-  FunctionNodeAction,
-  Mutate,
-  NodeState,
-  NodeUpdate,
-  statements,
-} from '@d0/code';
-import { Context } from '@d0/core';
+import { CodeAdapter, CodeContext, Mutate, NodeState, CodeUpdate, SourceAst, getStatements } from '@d0/code';
 import { prettyAST } from '@d0/prettier';
-import { parse, TSESTree, AST, TSESTreeOptions } from '@typescript-eslint/typescript-estree';
+import {
+  parse,
+  TSESTree,
+  AST,
+  TSESTreeOptions,
+  parseAndGenerateServices,
+} from '@typescript-eslint/typescript-estree';
 import jsonata from 'jsonata';
 import prettier from 'prettier';
+import { moduleConstArrowFunction, moduleFunctionDeclarations } from './adapters/find-function';
+import { queryNodesToNodeState } from './adapters/node-state';
 
 export const typescriptAdapter: CodeAdapter<AST<TSESTreeOptions>, TSESTree.Node> = {
-  parse: function (sourceCode: string, options: any): AST<TSESTreeOptions> {
-    return parse(sourceCode, options) as any;
+  parse: function (sourceCode: string, options: any): SourceAst<AST<TSESTreeOptions>> {
+    // return parse(sourceCode, options) as any;
+    return {
+      ast: parse(sourceCode, {
+        loc: true,
+        range: true,
+        comment: true,
+        ...options,
+      }),
+      sourceCode: sourceCode,
+    } as SourceAst<AST<TSESTreeOptions>>;
   },
-  resolve: function (codeCtx: CodeContext): string {
-    return (prettier as any).__debug.formatAST(codeCtx.$ast, {
-      originalText: '',
-      parser: 'babel',
-      ...{}, // TODO: Provide options
-    }).formatted;
-  },
+
   queries: {
-    program: function (codeCtx: CodeContext): TSESTree.Node {
-      return codeCtx.$ast;
+    program: function (ast: SourceAst<AST<TSESTreeOptions>>): NodeState<TSESTree.Node> {
+      return {
+        node: ast.ast,
+        source: ast.sourceCode,
+        range: null,
+      };
     },
-    statements: function (parent: TSESTree.Node, codeCtx: CodeContext, filter?: string): TSESTree.Node[] {
-      let exp = jsonata(!filter ? 'body' : `body[${filter}]`);
-      return exp.evaluate(parent);
-    },
-    functions: function (
+    getStatements: function (
       parent: TSESTree.Node,
-      codeCtx: CodeContext,
+      ast: SourceAst<AST<TSESTreeOptions>>,
       filter?: string
-    ): TSESTree.FunctionLike[] {
-      let exp = jsonata(
-        !filter ? "body[type='FunctionDeclaration']" : `body[type='FunctionDeclaration' and ${filter}]`
-      );
-      return exp.evaluate(parent);
+    ): NodeState<TSESTree.Node>[] {
+      let exp = jsonata(!filter ? 'body' : `body[${filter}]`);
+      return queryNodesToNodeState<TSESTree.Node>(exp.evaluate(parent), ast);
+    },
+    getFunctions: function (
+      parent: TSESTree.Node,
+      ast: SourceAst<AST<TSESTreeOptions>>,
+      filter?: string
+    ): NodeState<TSESTree.FunctionLike>[] {
+      // console.log(JSON.stringify(parent, null, 2));
+      // return moduleConstArrowFunction(ast);
+      return moduleFunctionDeclarations(ast);
+      // let exp = jsonata(
+      //   !filter
+      //     ? "body.**.[type='FunctionDeclaration' or type='ArrowFunctionExpression' or type='FunctionExpression' or type='TSDeclareFunction' or type='TSEmptyBodyFunctionExpression']"
+      //     : `body[type='FunctionDeclaration' and ${filter}]`
+      // );
+      // return queryNodesToNodeState<TSESTree.FunctionLike>(exp.evaluate(parent), ast);
     },
   },
   transforms: {
     functions: {
       prependToBody: (
-        node: TSESTree.FunctionLike,
+        state: NodeState<TSESTree.FunctionLike>,
         mutate: Mutate<AST<TSESTreeOptions>, TSESTree.FunctionLike, string>,
-        ctx: CodeContext<AST<TSESTreeOptions>, TSESTree.FunctionLike>
-      ): NodeUpdate<TSESTree.FunctionLike> => {
-        
+        ast: SourceAst<AST<TSESTreeOptions>>
+      ): CodeUpdate => {
+        return null;
       },
     },
     statements: {},

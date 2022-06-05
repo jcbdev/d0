@@ -16,9 +16,8 @@ describe('should load object from json into context', () => {
       `${(Math.random() + 1).toString(36).substring(7)}-${(Math.random() + 1).toString(36).substring(7)}.json`
     );
     await writeFile(rndFile, json);
-    let result = await fromJson('loadJson', rndFile)({ $tmpl: {} });
+    let result = await fromJson('loadJson', rndFile)({});
     expect(result).toEqual({
-      $tmpl: {},
       loadJson: {
         testValue: 'Hello',
         otherValue: 123,

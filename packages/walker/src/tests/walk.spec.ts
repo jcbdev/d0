@@ -94,7 +94,7 @@ describe('walk an object from the context', () => {
           anArray: [1, 2, 3],
           notprimitive: expect.any(Date),
         },
-        info: { name: '$root', ancestors: [], path: ['$root'] },
+        info: { name: '$root', pathAncestors: [], path: ['$root'] },
       },
       'Object.enter.$root': {
         node: {
@@ -102,12 +102,14 @@ describe('walk an object from the context', () => {
           anArray: [1, 2, 3],
           notprimitive: expect.any(Date),
         },
-        info: { name: '$root', ancestors: [], path: ['$root'] },
+        info: { name: '$root', pathAncestors: [], path: ['$root'] },
       },
       'enter.Object.$root.someObject': {
         node: { test: 'string' },
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'someObject'],
           parent: {
             someObject: { test: 'string' },
@@ -120,7 +122,9 @@ describe('walk an object from the context', () => {
       'Object.enter.$root.someObject': {
         node: { test: 'string' },
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'someObject'],
           parent: {
             someObject: { test: 'string' },
@@ -133,7 +137,7 @@ describe('walk an object from the context', () => {
       'enter.Primitive.$root.someObject.test': {
         node: 'string',
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             { test: 'string' },
           ],
@@ -145,7 +149,7 @@ describe('walk an object from the context', () => {
       'Primitive.enter.$root.someObject.test': {
         node: 'string',
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             { test: 'string' },
           ],
@@ -157,7 +161,7 @@ describe('walk an object from the context', () => {
       'leave.Primitive.$root.someObject.test': {
         node: 'string',
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             { test: 'string' },
           ],
@@ -169,7 +173,7 @@ describe('walk an object from the context', () => {
       'Primitive.leave.$root.someObject.test': {
         node: 'string',
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             { test: 'string' },
           ],
@@ -181,7 +185,9 @@ describe('walk an object from the context', () => {
       'leave.Object.$root.someObject': {
         node: { test: 'string' },
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'someObject'],
           parent: {
             someObject: { test: 'string' },
@@ -194,7 +200,9 @@ describe('walk an object from the context', () => {
       'Object.leave.$root.someObject': {
         node: { test: 'string' },
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'someObject'],
           parent: {
             someObject: { test: 'string' },
@@ -207,7 +215,9 @@ describe('walk an object from the context', () => {
       'enter.Array.$root.anArray': {
         node: [1, 2, 3],
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'anArray'],
           parent: {
             someObject: { test: 'string' },
@@ -220,7 +230,9 @@ describe('walk an object from the context', () => {
       'Array.enter.$root.anArray': {
         node: [1, 2, 3],
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'anArray'],
           parent: {
             someObject: { test: 'string' },
@@ -233,7 +245,7 @@ describe('walk an object from the context', () => {
       'enter.Primitive.$root.anArray.0': {
         node: 1,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -250,7 +262,7 @@ describe('walk an object from the context', () => {
       'Primitive.enter.$root.anArray.0': {
         node: 1,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -267,7 +279,7 @@ describe('walk an object from the context', () => {
       'leave.Primitive.$root.anArray.0': {
         node: 1,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -284,7 +296,7 @@ describe('walk an object from the context', () => {
       'Primitive.leave.$root.anArray.0': {
         node: 1,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -301,7 +313,7 @@ describe('walk an object from the context', () => {
       'enter.Primitive.$root.anArray.1': {
         node: 2,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -318,7 +330,7 @@ describe('walk an object from the context', () => {
       'Primitive.enter.$root.anArray.1': {
         node: 2,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -335,7 +347,7 @@ describe('walk an object from the context', () => {
       'leave.Primitive.$root.anArray.1': {
         node: 2,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -352,7 +364,7 @@ describe('walk an object from the context', () => {
       'Primitive.leave.$root.anArray.1': {
         node: 2,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -369,7 +381,7 @@ describe('walk an object from the context', () => {
       'enter.Primitive.$root.anArray.2': {
         node: 3,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -386,7 +398,7 @@ describe('walk an object from the context', () => {
       'Primitive.enter.$root.anArray.2': {
         node: 3,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -403,7 +415,7 @@ describe('walk an object from the context', () => {
       'leave.Primitive.$root.anArray.2': {
         node: 3,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -420,7 +432,7 @@ describe('walk an object from the context', () => {
       'Primitive.leave.$root.anArray.2': {
         node: 3,
         info: {
-          ancestors: [
+          pathAncestors: [
             { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
             [1, 2, 3],
           ],
@@ -437,7 +449,9 @@ describe('walk an object from the context', () => {
       'leave.Array.$root.anArray': {
         node: [1, 2, 3],
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'anArray'],
           parent: {
             someObject: { test: 'string' },
@@ -450,7 +464,9 @@ describe('walk an object from the context', () => {
       'Array.leave.$root.anArray': {
         node: [1, 2, 3],
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'anArray'],
           parent: {
             someObject: { test: 'string' },
@@ -463,7 +479,9 @@ describe('walk an object from the context', () => {
       'enter.Primitive.$root.notprimitive': {
         node: expect.any(Date),
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'notprimitive'],
           parent: {
             someObject: { test: 'string' },
@@ -476,7 +494,9 @@ describe('walk an object from the context', () => {
       'Primitive.enter.$root.notprimitive': {
         node: expect.any(Date),
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'notprimitive'],
           parent: {
             someObject: { test: 'string' },
@@ -489,7 +509,9 @@ describe('walk an object from the context', () => {
       'leave.Primitive.$root.notprimitive': {
         node: expect.any(Date),
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'notprimitive'],
           parent: {
             someObject: { test: 'string' },
@@ -502,7 +524,9 @@ describe('walk an object from the context', () => {
       'Primitive.leave.$root.notprimitive': {
         node: expect.any(Date),
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          ],
           path: ['$root', 'notprimitive'],
           parent: {
             someObject: { test: 'string' },
@@ -518,7 +542,7 @@ describe('walk an object from the context', () => {
           anArray: [1, 2, 3],
           notprimitive: expect.any(Date),
         },
-        info: { name: '$root', ancestors: [], path: ['$root'] },
+        info: { name: '$root', pathAncestors: [], path: ['$root'] },
       },
       'Object.leave.$root': {
         node: {
@@ -526,7 +550,7 @@ describe('walk an object from the context', () => {
           anArray: [1, 2, 3],
           notprimitive: expect.any(Date),
         },
-        info: { name: '$root', ancestors: [], path: ['$root'] },
+        info: { name: '$root', pathAncestors: [], path: ['$root'] },
       },
       result: {
         someObject: { test: 'string' },

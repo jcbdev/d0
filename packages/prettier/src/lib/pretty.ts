@@ -1,8 +1,12 @@
 import { format, Options } from 'prettier';
-import { Action, Resolve, Context } from '@d0/core';
+import { D0, ResolveD0 } from '@d0/core';
 
-export function pretty(name: string, resolve: Resolve<string>, options?: Options): Action {
-  return async (ctx: Context) => {
+export function pretty<TFlex = void, TBase = void>(
+  name: string,
+  resolve: ResolveD0<string, TFlex, TBase>,
+  options?: Options
+): D0<TFlex, TBase> {
+  return async ctx => {
     ctx[name] = format(await resolve(ctx), options);
     return ctx;
   };

@@ -12,11 +12,11 @@ const main = async () => {
         });
         return tmpl;
       }),
-      // pretty('result', ctx => ctx.$tmpl.baseType, { parser: 'typescript', filepath: '1.ts' }),
+      // pretty('result', ctx => ctx.baseType, { parser: 'typescript', filepath: '1.ts' }),
       // output(outFileName, ctx => ctx.result),
     ])
   );
-  console.log(ctx.$tmpl.ts);
+  console.log(ctx.ts);
 };
 
 (async () => {

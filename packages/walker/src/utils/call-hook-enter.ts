@@ -1,21 +1,33 @@
 import { Ctx } from '@d0/core';
-import { NodeInfo, VisitIntention, Visitor } from '../lib/types';
+import { FlexEnterLeaveVisitor, NodeInfo, RegexEnterNode, VisitIntention, Visitor } from '../lib/types';
 import matchProp from './match-prop';
 
-export default <T = any, TCtx = Ctx>(
+export default async <T = any, TCtx = Ctx>(
   nodeType: string,
   node: T,
   info: NodeInfo,
   ctx: TCtx,
   visitor: Visitor<T, TCtx>
-): VisitIntention<T> => {
+): Promise<VisitIntention<T>> => {
   let intention: VisitIntention<T> = {
     node: node,
     intention: 'PROCESS',
   };
+  if (!nodeType)
+    return {
+      node: node,
+      intention: 'SKIP',
+    };
   if (visitor.enter && matchProp(visitor.enter, nodeType))
-    intention = visitor.enter[matchProp(visitor.enter, nodeType)](node, info, ctx) as VisitIntention<T>;
+    return (await visitor.enter[matchProp(visitor.enter, nodeType)](node, info, ctx)) as VisitIntention<T>;
+
+  let regexRule = (
+    (visitor.enter as FlexEnterLeaveVisitor<T, TCtx>)?.regex as RegexEnterNode<T, TCtx>[]
+  )?.find(r => r.exp.test(nodeType));
+  if (regexRule) return await regexRule.do(node, info, ctx);
+
   if (matchProp(visitor, nodeType) && visitor[matchProp(visitor, nodeType)]?.enter)
-    intention = visitor[matchProp(visitor, nodeType)]?.enter(node, info, ctx) as VisitIntention<T>;
+    return (await visitor[matchProp(visitor, nodeType)]?.enter(node, info, ctx)) as VisitIntention<T>;
+
   return intention;
 };

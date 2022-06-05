@@ -51,7 +51,7 @@ describe('Generate some typescript from a JSON source', () => {
             ${props.join('\n')}
           }`;
         }),
-        pretty('result', ctx => ctx.$tmpl.baseType, { parser: 'typescript', filepath: '1.ts' }),
+        pretty('result', ctx => ctx.baseType, { parser: 'typescript', filepath: '1.ts' }),
         output(outFileName, ctx => ctx.result),
       ])
     );

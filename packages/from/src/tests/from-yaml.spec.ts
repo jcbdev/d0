@@ -14,9 +14,8 @@ otherValue: 123
       `${(Math.random() + 1).toString(36).substring(7)}-${(Math.random() + 1).toString(36).substring(7)}.yaml`
     );
     await writeFile(rndFile, yaml);
-    let result = await fromYaml('loadYaml', rndFile)({ $tmpl: {} });
+    let result = await fromYaml('loadYaml', rndFile)({});
     expect(result).toEqual({
-      $tmpl: {},
       loadYaml: {
         testValue: 'Hello',
         otherValue: 123,

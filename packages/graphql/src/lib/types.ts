@@ -1,109 +1,66 @@
 import { Ctx } from '@d0/core';
-import { NodeInfo, VisitIntention, Visitor } from '@d0/walker';
+import { EnterLeave, EnterNode, LeaveNode, NodeInfo, VisitIntention, Visitor } from '@d0/walker';
 import { ASTKindToNode, ASTNode } from 'graphql/language/ast';
 
 export type GraphQLEnterLeaveVisitor<TCtx = Ctx> = {
   enter?: {
-    [K in keyof ASTKindToNode]?: (
-      node: ASTKindToNode[K],
-      info: NodeInfo,
-      ctx: TCtx
-    ) => VisitIntention<ASTNode>;
+    [K in keyof ASTKindToNode]?: EnterNode<ASTKindToNode[K], TCtx>;
   };
   leave?: {
-    [K in keyof ASTKindToNode]?: (node: ASTKindToNode[K], info: NodeInfo, ctx: TCtx) => any;
+    [K in keyof ASTKindToNode]?: LeaveNode<ASTKindToNode[K], TCtx>;
   };
 };
 
 export type GraphQLShapeMapVisitor<TCtx = Ctx> = {
   [K in keyof ASTKindToNode]?: {
-    enter?: (node: ASTKindToNode[K], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode>;
-    leave?: (node: ASTKindToNode[K], info: NodeInfo, ctx: TCtx) => any;
+    enter?: EnterNode<ASTKindToNode[K], TCtx>;
+    leave?: LeaveNode<ASTKindToNode[K], TCtx>;
   };
 };
 
 export type GraphQLArrayVisitor<TCtx = Ctx> = {
-  interfaces?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  directives?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  definitions?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  arguments?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  values?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  fields?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  possibleTypes?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  enumValues?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  inputFields?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  selections?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  variableDefinitions?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  operationTypes?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
-  locations?: {
-    enter?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    leave?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-  };
+  interfaces?: EnterLeave<ASTNode[], TCtx>;
+  directives?: EnterLeave<ASTNode[], TCtx>;
+  definitions?: EnterLeave<ASTNode[], TCtx>;
+  arguments?: EnterLeave<ASTNode[], TCtx>;
+  values?: EnterLeave<ASTNode[], TCtx>;
+  fields?: EnterLeave<ASTNode[], TCtx>;
+  possibleTypes?: EnterLeave<ASTNode[], TCtx>;
+  enumValues?: EnterLeave<ASTNode[], TCtx>;
+  inputFields?: EnterLeave<ASTNode[], TCtx>;
+  selections?: EnterLeave<ASTNode[], TCtx>;
+  variableDefinitions?: EnterLeave<ASTNode[], TCtx>;
+  operationTypes?: EnterLeave<ASTNode[], TCtx>;
+  locations?: EnterLeave<ASTNode[], TCtx>;
   enter?: {
-    interfaces?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    directives?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    definitions?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    arguments?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    values?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    fields?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    possibleTypes?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    enumValues?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    inputFields?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    selections?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    variableDefinitions?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    operationTypes?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
-    locations?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => VisitIntention<ASTNode[]>;
+    interfaces?: EnterNode<ASTNode[], TCtx>;
+    directives?: EnterNode<ASTNode[], TCtx>;
+    definitions?: EnterNode<ASTNode[], TCtx>;
+    arguments?: EnterNode<ASTNode[], TCtx>;
+    values?: EnterNode<ASTNode[], TCtx>;
+    fields?: EnterNode<ASTNode[], TCtx>;
+    possibleTypes?: EnterNode<ASTNode[], TCtx>;
+    enumValues?: EnterNode<ASTNode[], TCtx>;
+    inputFields?: EnterNode<ASTNode[], TCtx>;
+    selections?: EnterNode<ASTNode[], TCtx>;
+    variableDefinitions?: EnterNode<ASTNode[], TCtx>;
+    operationTypes?: EnterNode<ASTNode[], TCtx>;
+    locations?: EnterNode<ASTNode[], TCtx>;
   };
   leave?: {
-    interfaces?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    directives?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    definitions?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    arguments?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    values?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    fields?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    possibleTypes?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    enumValues?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    inputFields?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    selections?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    variableDefinitions?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    operationTypes?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
-    locations?: (node: ASTNode[], info: NodeInfo, ctx: TCtx) => any;
+    interfaces?: LeaveNode<ASTNode[], TCtx>;
+    directives?: LeaveNode<ASTNode[], TCtx>;
+    definitions?: LeaveNode<ASTNode[], TCtx>;
+    arguments?: LeaveNode<ASTNode[], TCtx>;
+    values?: LeaveNode<ASTNode[], TCtx>;
+    fields?: LeaveNode<ASTNode[], TCtx>;
+    possibleTypes?: LeaveNode<ASTNode[], TCtx>;
+    enumValues?: LeaveNode<ASTNode[], TCtx>;
+    inputFields?: LeaveNode<ASTNode[], TCtx>;
+    selections?: LeaveNode<ASTNode[], TCtx>;
+    variableDefinitions?: LeaveNode<ASTNode[], TCtx>;
+    operationTypes?: LeaveNode<ASTNode[], TCtx>;
+    locations?: LeaveNode<ASTNode[], TCtx>;
   };
 };
 
@@ -120,10 +77,10 @@ export type GraphQLArrayVisitor<TCtx = Ctx> = {
 //   }
 // >;
 
-export type GraphQLVisitor = Visitor<ASTNode> &
-  GraphQLEnterLeaveVisitor &
-  GraphQLShapeMapVisitor &
-  GraphQLArrayVisitor;
+export type GraphQLVisitor<TCtx = Ctx> = Visitor<ASTNode, TCtx> &
+  GraphQLEnterLeaveVisitor<TCtx> &
+  GraphQLShapeMapVisitor<TCtx> &
+  GraphQLArrayVisitor<TCtx>;
 
 // // expands object types one level deep
 // type Expand<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;

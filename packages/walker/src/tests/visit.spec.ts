@@ -91,30 +91,90 @@ describe('visit an object structure', () => {
       notprimitive: expect.any(Date),
     });
 
+    // console.log(JSON.stringify(ctx));
+    // return;
     expect(ctx).toEqual({
       'enter.Object.$root': {
         node: {
-          someObject: { test: 'string' },
+          someObject: {
+            test: 'string',
+          },
           anArray: [1, 2, 3],
           notprimitive: expect.any(Date),
         },
-        info: { name: '$root', ancestors: [], path: ['$root'] },
+        info: {
+          name: '$root',
+          path: ['$root'],
+          pathAncestors: [],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+        },
       },
       'Object.enter.$root': {
         node: {
-          someObject: { test: 'string' },
+          someObject: {
+            test: 'string',
+          },
           anArray: [1, 2, 3],
           notprimitive: expect.any(Date),
         },
-        info: { name: '$root', ancestors: [], path: ['$root'] },
+        info: {
+          name: '$root',
+          path: ['$root'],
+          pathAncestors: [],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+        },
       },
       'enter.Object.$root.someObject': {
-        node: { test: 'string' },
+        node: {
+          test: 'string',
+        },
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'someObject'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -122,12 +182,40 @@ describe('visit an object structure', () => {
         },
       },
       'Object.enter.$root.someObject': {
-        node: { test: 'string' },
+        node: {
+          test: 'string',
+        },
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'someObject'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -137,58 +225,202 @@ describe('visit an object structure', () => {
       'enter.Primitive.$root.someObject.test': {
         node: 'string',
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
-            { test: 'string' },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              test: 'string',
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              test: 'string',
+            },
           ],
           path: ['$root', 'someObject', 'test'],
-          parent: { test: 'string' },
+          parent: {
+            test: 'string',
+          },
           name: 'test',
         },
       },
       'Primitive.enter.$root.someObject.test': {
         node: 'string',
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
-            { test: 'string' },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              test: 'string',
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              test: 'string',
+            },
           ],
           path: ['$root', 'someObject', 'test'],
-          parent: { test: 'string' },
+          parent: {
+            test: 'string',
+          },
           name: 'test',
         },
       },
       'leave.Primitive.$root.someObject.test': {
         node: 'string',
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
-            { test: 'string' },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              test: 'string',
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              test: 'string',
+            },
           ],
           path: ['$root', 'someObject', 'test'],
-          parent: { test: 'string' },
+          parent: {
+            test: 'string',
+          },
           name: 'test',
         },
       },
       'Primitive.leave.$root.someObject.test': {
         node: 'string',
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
-            { test: 'string' },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              test: 'string',
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              test: 'string',
+            },
           ],
           path: ['$root', 'someObject', 'test'],
-          parent: { test: 'string' },
+          parent: {
+            test: 'string',
+          },
           name: 'test',
         },
       },
       'leave.Object.$root.someObject': {
-        node: { test: 'string' },
+        node: {
+          test: 'string',
+        },
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'someObject'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -196,12 +428,40 @@ describe('visit an object structure', () => {
         },
       },
       'Object.leave.$root.someObject': {
-        node: { test: 'string' },
+        node: {
+          test: 'string',
+        },
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'someObject'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -211,10 +471,36 @@ describe('visit an object structure', () => {
       'enter.Array.$root.anArray': {
         node: [1, 2, 3],
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'anArray'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -224,10 +510,36 @@ describe('visit an object structure', () => {
       'Array.enter.$root.anArray': {
         node: [1, 2, 3],
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'anArray'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -237,13 +549,37 @@ describe('visit an object structure', () => {
       'enter.Primitive.$root.anArray.0': {
         node: 1,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 0],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -254,13 +590,37 @@ describe('visit an object structure', () => {
       'Primitive.enter.$root.anArray.0': {
         node: 1,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 0],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -271,13 +631,37 @@ describe('visit an object structure', () => {
       'leave.Primitive.$root.anArray.0': {
         node: 1,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 0],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -288,13 +672,37 @@ describe('visit an object structure', () => {
       'Primitive.leave.$root.anArray.0': {
         node: 1,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 0],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -305,13 +713,37 @@ describe('visit an object structure', () => {
       'enter.Primitive.$root.anArray.1': {
         node: 2,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 1],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -322,13 +754,37 @@ describe('visit an object structure', () => {
       'Primitive.enter.$root.anArray.1': {
         node: 2,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 1],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -339,13 +795,37 @@ describe('visit an object structure', () => {
       'leave.Primitive.$root.anArray.1': {
         node: 2,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 1],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -356,13 +836,37 @@ describe('visit an object structure', () => {
       'Primitive.leave.$root.anArray.1': {
         node: 2,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 1],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -373,13 +877,37 @@ describe('visit an object structure', () => {
       'enter.Primitive.$root.anArray.2': {
         node: 3,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 2],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -390,13 +918,37 @@ describe('visit an object structure', () => {
       'Primitive.enter.$root.anArray.2': {
         node: 3,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 2],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -407,13 +959,37 @@ describe('visit an object structure', () => {
       'leave.Primitive.$root.anArray.2': {
         node: 3,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 2],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -424,13 +1000,37 @@ describe('visit an object structure', () => {
       'Primitive.leave.$root.anArray.2': {
         node: 3,
         info: {
-          ancestors: [
-            { someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) },
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
             [1, 2, 3],
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
           ],
           path: ['$root', 'anArray', 2],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -441,10 +1041,36 @@ describe('visit an object structure', () => {
       'leave.Array.$root.anArray': {
         node: [1, 2, 3],
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'anArray'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -454,10 +1080,36 @@ describe('visit an object structure', () => {
       'Array.leave.$root.anArray': {
         node: [1, 2, 3],
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'anArray'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -467,10 +1119,36 @@ describe('visit an object structure', () => {
       'enter.Primitive.$root.notprimitive': {
         node: expect.any(Date),
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'notprimitive'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -480,10 +1158,36 @@ describe('visit an object structure', () => {
       'Primitive.enter.$root.notprimitive': {
         node: expect.any(Date),
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'notprimitive'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -493,10 +1197,36 @@ describe('visit an object structure', () => {
       'leave.Primitive.$root.notprimitive': {
         node: expect.any(Date),
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'notprimitive'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -506,10 +1236,36 @@ describe('visit an object structure', () => {
       'Primitive.leave.$root.notprimitive': {
         node: expect.any(Date),
         info: {
-          ancestors: [{ someObject: { test: 'string' }, anArray: [1, 2, 3], notprimitive: expect.any(Date) }],
+          pathAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
           path: ['$root', 'notprimitive'],
           parent: {
-            someObject: { test: 'string' },
+            someObject: {
+              test: 'string',
+            },
             anArray: [1, 2, 3],
             notprimitive: expect.any(Date),
           },
@@ -518,19 +1274,49 @@ describe('visit an object structure', () => {
       },
       'leave.Object.$root': {
         node: {
-          someObject: { test: 'string' },
+          someObject: {
+            test: 'string',
+          },
           anArray: [1, 2, 3],
           notprimitive: expect.any(Date),
         },
-        info: { name: '$root', ancestors: [], path: ['$root'] },
+        info: {
+          name: '$root',
+          path: ['$root'],
+          pathAncestors: [],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+        },
       },
       'Object.leave.$root': {
         node: {
-          someObject: { test: 'string' },
+          someObject: {
+            test: 'string',
+          },
           anArray: [1, 2, 3],
           notprimitive: expect.any(Date),
         },
-        info: { name: '$root', ancestors: [], path: ['$root'] },
+        info: {
+          name: '$root',
+          path: ['$root'],
+          pathAncestors: [],
+          nodeAncestors: [
+            {
+              someObject: {
+                test: 'string',
+              },
+              anArray: [1, 2, 3],
+              notprimitive: expect.any(Date),
+            },
+          ],
+        },
       },
     });
   });

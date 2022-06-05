@@ -1,13 +1,13 @@
-import { Action, Context } from '@d0/core';
+import { D0 } from '@d0/core';
 import { createSourceFile, ScriptTarget } from 'typescript';
 
-export const typescript = (
+export const typescript = <TFlex = void, TBase = void>(
   name: string,
   filename: string,
   ts: string,
   languageVersion: ScriptTarget
-): Action => {
-  return async (ctx: Context) => {
+): D0<TFlex, TBase> => {
+  return async ctx => {
     ctx[name] = createSourceFile(filename, ts, languageVersion);
     return ctx;
   };

@@ -1,4 +1,3 @@
-import { Context } from '@d0/core';
 import { estree } from '../lib/estree';
 import { prettyAST } from '@d0/prettier';
 import { createSourceFile, ScriptTarget } from 'typescript';
@@ -13,7 +12,7 @@ function x(test: string) {
 x(hello);
     `;
 
-    let ctx: Context = { $tmpl: {} };
+    let ctx: any = {};
     ctx = await estree('ast', ts, {
       jsx: false,
     })(ctx);

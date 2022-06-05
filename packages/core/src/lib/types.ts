@@ -35,7 +35,7 @@ export type Or<T = void, TOr = void> = T extends void ? TOr : T;
 
 export type BaseD0s<DFlex = void, DBase = void> = {
   d0: <TD0, DFlex = void, DBase = void>(
-    d0: () => TD0,
+    d0: <TFlex = DFlex>() => TD0,
     startD0: StartD0<TD0, DFlex, DBase>,
     withCtx?: Ctx<DFlex, DBase>
   ) => Promise<Ctx<DFlex, DBase>>;

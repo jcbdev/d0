@@ -1,10 +1,8 @@
-import { Context } from '@d0/core';
 import { prettyAST } from '../lib/pretty-ast';
 
 describe('prettier formatting of code ast', () => {
   it('should run prettier on a typescript input', async () => {
-    let ctx: Context = {
-      $tmpl: {},
+    let ctx: any = {
       ast: {
         type: 'Program',
         body: [
@@ -52,7 +50,7 @@ describe('prettier formatting of code ast', () => {
         sourceType: 'script',
       },
     };
-    let result = await prettyAST('pretty', ctx => ctx.ast, {
+    let result = await prettyAST<'Flex'>('pretty', ctx => ctx.ast, {
       parser: 'typescript',
       filepath: 'test.ts',
       printWidth: 20,
