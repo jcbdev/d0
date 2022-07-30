@@ -1,4 +1,8 @@
 {
   "name": "@d0-it/code",
-  "version": "0.0.1"
+  "version": "0.0.3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jcbdev/d0"
+  }
 }
