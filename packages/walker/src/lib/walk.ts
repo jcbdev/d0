@@ -9,7 +9,7 @@ export const walk = <T, TFlex = void, TBase = void>(
   visitor: Visitor<T, Ctx<TFlex, TBase>>
 ): D0<TFlex, TBase> => {
   return async ctx => {
-    ctx[name] = visit<T, Ctx<TFlex, TBase>>(await resolve(ctx), selector, visitor, ctx);
+    ctx[name] = await visit<T, Ctx<TFlex, TBase>>(await resolve(ctx), selector, visitor, ctx);
     return ctx;
   };
 };

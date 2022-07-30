@@ -1,4 +1,4 @@
-# graphql
+# @d0/graphql
 
 This library was generated with [Nx](https://nx.dev).
 

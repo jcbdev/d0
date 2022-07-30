@@ -11,9 +11,8 @@ describe('should load text from text file into context', () => {
       `${(Math.random() + 1).toString(36).substring(7)}-${(Math.random() + 1).toString(36).substring(7)}.txt`
     );
     await writeFile(rndFile, text);
-    let result = await fromText('loadText', rndFile)({ $tmpl: {} });
+    let result = await fromText('loadText', rndFile)({});
     expect(result).toEqual({
-      $tmpl: {},
       loadText: 'Sometext from file blah blah',
     });
   });

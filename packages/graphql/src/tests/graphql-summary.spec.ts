@@ -1,11 +1,9 @@
-import { Context } from '@d0/core';
 import { parse } from 'graphql';
 import { graphQLSummary } from '../lib/graphql-summary';
 
 describe('create a summary of GQL types', () => {
   it('should transform Arguments', async () => {
-    let ctx: Context = {
-      $tmpl: {},
+    let ctx: any = {
       ast: {
         kind: 'Test',
         arguments: [
@@ -132,7 +130,7 @@ describe('create a summary of GQL types', () => {
       },
     };
 
-    ctx = await graphQLSummary('summary', ctx => ctx.ast)(ctx);
+    ctx = await graphQLSummary<'Flex'>('summary', ctx => ctx.ast)(ctx);
     expect(ctx.summary).toEqual({
       arguments: {
         name: 'hello',
@@ -149,8 +147,7 @@ describe('create a summary of GQL types', () => {
   });
 
   it('should transform Directive', async () => {
-    let ctx: Context = {
-      $tmpl: {},
+    let ctx: any = {
       ast: {
         kind: 'Directive',
         name: {
@@ -165,7 +162,7 @@ describe('create a summary of GQL types', () => {
       },
     };
 
-    ctx = await graphQLSummary('summary', ctx => ctx.ast)(ctx);
+    ctx = await graphQLSummary<'Flex'>('summary', ctx => ctx.ast)(ctx);
     expect(ctx.summary).toEqual({
       name: 'withdirective',
     });
@@ -180,8 +177,8 @@ describe('create a summary of GQL types', () => {
   }
       `;
 
-    let ctx: Context = { $tmpl: {}, ast: parse(gql) };
-    ctx = await graphQLSummary('summary', ctx => ctx.ast)(ctx);
+    let ctx: any = { ast: parse(gql) };
+    ctx = await graphQLSummary<'Flex'>('summary', ctx => ctx.ast)(ctx);
     // console.log(JSON.stringify(ctx, null, 2));
     expect(ctx.summary).toEqual([
       {
@@ -217,8 +214,8 @@ describe('create a summary of GQL types', () => {
   }
       `;
 
-    let ctx: Context = { $tmpl: {}, ast: parse(gql) };
-    ctx = await graphQLSummary('summary', ctx => ctx.ast)(ctx);
+    let ctx: any = { ast: parse(gql) };
+    ctx = await graphQLSummary<'Flex'>('summary', ctx => ctx.ast)(ctx);
     // console.log(JSON.stringify(ctx, null, 2));
     expect(ctx.summary).toEqual([
       {
@@ -254,9 +251,9 @@ type Starship {
 }
       `;
 
-    let ctx: Context = { $tmpl: {}, ast: parse(gql) };
-    ctx = await graphQLSummary('summary', ctx => ctx.ast)(ctx);
-    console.log(JSON.stringify(ctx.ast, null, 2));
+    let ctx: any = { ast: parse(gql) };
+    ctx = await graphQLSummary<'Flex'>('summary', ctx => ctx.ast)(ctx);
+    // console.log(JSON.stringify(ctx.ast, null, 2));
     expect(ctx.summary).toEqual([
       {
         type: 'Object',
@@ -299,7 +296,7 @@ type Starship {
   // }
   //     `;
 
-  //   let ctx: Context = { $tmpl: {}, ast: parse(gql) };
+  //   let ctx: Context = { ast: parse(gql) };
   //   ctx = await graphQLSummary('summary', ctx => ctx.ast)(ctx);
   //   console.log(JSON.stringify(ctx, null, 2));
   // });

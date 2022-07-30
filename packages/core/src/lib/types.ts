@@ -13,7 +13,7 @@ export type D0<TFlex = void, TBase = void> = (
 export type StartD0<TD0, TFlex = void, TBase = void> = (
   d0$: TD0,
   ctx: Ctx<TFlex, TBase>
-) => Promise<Ctx<TFlex, TBase>> | Ctx<TFlex, TBase>;
+) => Promise<D0<TFlex, TBase>> | D0<TFlex, TBase>;
 
 export type ItemD0<T, TFlex = void, TBase = void> = (
   item: T | T[],
@@ -35,7 +35,7 @@ export type Or<T = void, TOr = void> = T extends void ? TOr : T;
 
 export type BaseD0s<DFlex = void, DBase = void> = {
   d0: <TD0, DFlex = void, DBase = void>(
-    d0: () => TD0,
+    d0: <TFlex = DFlex>() => TD0,
     startD0: StartD0<TD0, DFlex, DBase>,
     withCtx?: Ctx<DFlex, DBase>
   ) => Promise<Ctx<DFlex, DBase>>;

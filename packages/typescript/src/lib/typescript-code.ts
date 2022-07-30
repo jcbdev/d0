@@ -1,16 +1,22 @@
-import { code, CodeAdapter, CodeContext, NodeAction } from '@d0/code';
-import { Action, Context } from '@d0/core';
-import { parse, TSESTree, AST, TSESTreeOptions } from '@typescript-eslint/typescript-estree';
+import { code, CodeAdapter, CodeContext } from '@d0/code';
+import { CoreD0s, Ctx, D0, StartD0 } from '@d0/core';
+import { AST, TSESTree } from '@typescript-eslint/typescript-estree';
+import { TSCodeContext, TSESTreeOptions, TypescriptCtx } from './types';
 import { typescriptAdapter } from './typescript-adapter';
 
-export const typescriptCode = (
-  name: string,
+export const typescriptCode = <TD0Extension = void, DFlex = void>(
   sourceCode: string,
-  action: NodeAction<AST<TSESTreeOptions>, TSESTree.Node>[],
-  options: any
-): Action => {
-  return async (ctx: Context) => {
-    ctx = await code(name, sourceCode, action, typescriptAdapter, options)(ctx);
+  options: any,
+  d0: <DFlex>() => TD0Extension & CoreD0s<DFlex, TypescriptCtx<DFlex>>,
+  action: StartD0<TD0Extension & CoreD0s<DFlex, TypescriptCtx<DFlex>>, DFlex, TSCodeContext>,
+  withCtx?: Ctx<DFlex, TSCodeContext>
+): D0<DFlex, TSCodeContext> => {
+  return async ctx => {
+    let newCtx = {
+      $indexes: { functions: {} },
+      ...withCtx,
+    };
+    ctx = await code(sourceCode, options, typescriptAdapter, d0, action, newCtx);
     return ctx;
   };
 };

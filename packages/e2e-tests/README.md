@@ -1,4 +1,4 @@
-# e2e-tests
+# @d0/e2e-tests
 
 This library was generated with [Nx](https://nx.dev).
 

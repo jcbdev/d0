@@ -1,7 +1,223 @@
 # d0
 
-d0 simple and hackable templates and code generation.
+d0 - simple and hackable templates and code generation.
+
+**_THIS IS ALPHA - USE AT OWN RISK!_**
 
 ## Installation
 
 `npm install @d0/core`
+
+## Packages
+
+| Package                                         |                Description                |              Status |
+| :---------------------------------------------- | :---------------------------------------: | ------------------: |
+| [@d0/core](packages/core/README.md)             |     Main core utilities and functions     |             Working |
+| [@d0/code](packages/code/README.md)             |          Mutate and inject code           |         Not Working |
+| [@d0/from](packages/from/README.md)             | Plugins to input from different filetypes | Basic Functionality |
+| [@d0/graphql](packages/graphql/README.md)       |      Functions to manipulate graphql      | Basic Functionality |
+| [@d0/prettier](packages/prettier/README.md)     |         Output code and clean up          | Basic Functionality |
+| [@d0/pull](packages/pull/README.md)             |           Download or pull code           | Basic Functionality |
+| [@d0/typescript](packages/typescript/README.md) |     AST and processors for typescript     |         Not Working |
+| [@d0/walker](packages/walker/README.md)         |       Plugin to create AST visitors       | Basic Functionality |
+
+## Examples
+
+See e2e-tests package
+
+### FLEXIBLE TYPING (gql to ts)
+
+```typescript
+it('generate a type - flexible typing', async () => {
+  let fileName = rndFileName();
+  let outFileName = rndFileNameTS();
+
+  await writeFile(
+    fileName,
+    /* graphql */ `
+        type Post {
+          id: ID!
+          comments: [Comment]
+          content: String
+        }
+
+        type Comment {
+          id: ID!
+          postId: ID!
+          message: String
+        }
+    `
+  );
+
+  const configure = () => ({
+    ...coreD0s<any>(),
+    ...graphQLD0s<any>(),
+    ...prettyD0s<any>(),
+  });
+
+  let resCtx: any = await d0(configure, (d0, ctx: any) => {
+    return d0.sequence([
+      d0.loadGraphQL('gql', fileName),
+      d0.graphQLSummary('summary', ctx => ctx.gql),
+      d0.template('typescript', ({ summary }) => {
+        let ts = '';
+
+        const gqlTypeToTs = (type: string) => {
+          switch (type) {
+            case 'String':
+              return 'string';
+            case 'Int':
+              return 'number';
+            case 'Float':
+              return 'number';
+            case 'ID':
+              return 'string';
+            default:
+              return type;
+          }
+        };
+
+        for (let type of summary) {
+          let props = Object.entries<any>(type.fields).map(
+            ([k, v]) => `${k}${v.nullable ? '?' : ''}: ${gqlTypeToTs(v.type)}${v.array ? '[]' : ''};`
+          );
+          ts += `export type ${type.name} = {
+              ${props.join('\n')}
+            }\n`;
+        }
+        return ts;
+      }),
+      d0.pretty('result', ctx => ctx.typescript, { parser: 'typescript', filepath: '1.ts' }),
+      d0.output(outFileName, ctx => ctx.result),
+    ]);
+  });
+
+  expect(resCtx.result).toEqual(`export type Post = {
+  id: string;
+  comments?: Comment[];
+  content?: string;
+};
+export type Comment = {
+  id: string;
+  postId: string;
+  message?: string;
+};
+`);
+
+  const fileResult = await readFile(outFileName, 'utf8');
+  expect(fileResult).toEqual(`export type Post = {
+  id: string;
+  comments?: Comment[];
+  content?: string;
+};
+export type Comment = {
+  id: string;
+  postId: string;
+  message?: string;
+};
+`);
+});
+```
+
+### STRONGLY TYPED (gql to ts)
+
+```typescript
+it.only('generate a type - strongly typed', async () => {
+  let fileName = rndFileName();
+  let outFileName = rndFileNameTS();
+
+  await writeFile(
+    fileName,
+    /* graphql */ `
+      type Post {
+        id: ID!
+        comments: [Comment]
+        content: String
+      }
+
+      type Comment {
+        id: ID!
+        postId: ID!
+        message: String
+      }
+    `
+  );
+
+  type ProcessingContext = {
+    result: string;
+    typescript: string;
+    summary: jsTypeDefinition[];
+    gql: DocumentNode;
+  };
+
+  type d0s<T = ProcessingContext> = BaseD0s<T> & CoreD0s<T> & GraphQLD0s<T> & PrettyD0s<T>;
+  const configure = <T = ProcessingContext>(): d0s<T> => ({
+    ...baseD0s<T>(),
+    ...coreD0s<T>(),
+    ...graphQLD0s<T>(),
+    ...prettyD0s<T>(),
+  });
+
+  let resCtx = await d0<d0s<ProcessingContext>, ProcessingContext>(configure, async (d0, ctx) => {
+    return await d0.sequence([
+      d0.loadGraphQL('gql', fileName),
+      d0.graphQLSummary('summary', ctx => ctx.gql),
+      d0.template('typescript', ({ summary }) => {
+        let ts = '';
+
+        const gqlTypeToTs = (type: string) => {
+          switch (type) {
+            case 'String':
+              return 'string';
+            case 'Int':
+              return 'number';
+            case 'Float':
+              return 'number';
+            case 'ID':
+              return 'string';
+            default:
+              return type;
+          }
+        };
+
+        for (let type of summary) {
+          let props = Object.entries(type.fields).map(
+            ([k, v]) => `${k}${v.nullable ? '?' : ''}: ${gqlTypeToTs(v.type)}${v.array ? '[]' : ''};`
+          );
+          ts += `export type ${type.name} = {
+                ${props.join('\n')}
+              }\n`;
+        }
+        return ts;
+      }),
+      d0.pretty('result', ctx => ctx.typescript, { parser: 'typescript', filepath: '1.ts' }),
+      d0.output(outFileName, ctx => ctx.result),
+    ]);
+  });
+
+  expect(resCtx.result).toEqual(`export type Post = {
+  id: string;
+  comments?: Comment[];
+  content?: string;
+};
+export type Comment = {
+  id: string;
+  postId: string;
+  message?: string;
+};
+`);
+
+  const fileResult = await readFile(outFileName, 'utf8');
+  expect(fileResult).toEqual(`export type Post = {
+  id: string;
+  comments?: Comment[];
+  content?: string;
+};
+export type Comment = {
+  id: string;
+  postId: string;
+  message?: string;
+};
+`);
+});
+```

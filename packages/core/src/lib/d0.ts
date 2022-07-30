@@ -8,5 +8,7 @@ export const d0 = async <TD0, DFlex = void, DBase = void>(
 ): Promise<Ctx<DFlex, DBase>> => {
   let $d0 = d0();
   let ctx = withCtx ?? ({} as Ctx<DFlex, DBase>);
-  return await action($d0, ctx);
+  return await (
+    await action($d0, ctx)
+  )(ctx);
 };

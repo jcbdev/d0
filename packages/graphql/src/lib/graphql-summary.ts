@@ -1,4 +1,4 @@
-import { D0 } from '@d0/core';
+import { Ctx, D0, ResolveD0 } from '@d0/core';
 import { walk } from '@d0/walker';
 import { ASTNode } from 'graphql';
 import { graphQLSelector } from './graphql-selector';
@@ -22,17 +22,17 @@ const withOptional = (node: any, original: any, fields: string[]) => {
 
 export const graphQLSummary = <TFlex = void, TBase = void>(
   name: string,
-  resolve: Function
+  resolve: ResolveD0<ASTNode, TFlex, TBase>
 ): D0<TFlex, TBase> => {
   return async ctx => {
-    await walk<ASTNode>(name, resolve, graphQLSelector, {
+    await walk<ASTNode, TFlex, TBase>(name, resolve, graphQLSelector, {
       enter: {
         Location: (node, info, ctx) => ({ node: null, intention: 'REMOVE' }),
         arguments: node => ({ node: node, intention: node.length ? 'PROCESS' : 'REMOVE' }),
         directives: node => ({ node: node, intention: node.length ? 'PROCESS' : 'REMOVE' }),
       },
       leave: {
-        ['*Value']: node => (node as any).value,
+        ['regex:.*Value']: node => (node as any).value,
         ListValue: node => [...node.values],
         NullValue: node => null,
         ObjectValue: node => node,
@@ -110,7 +110,7 @@ export const graphQLSummary = <TFlex = void, TBase = void>(
             ['arguments', 'directives']
           ),
         arguments: nodes => {
-          console.log(`arguments ${JSON.stringify(nodes)}`);
+          // console.log(`arguments ${JSON.stringify(nodes)}`);
           return reduceBy('name', nodes, item => item.value ?? item);
         },
         directives: nodes => reduceBy('name', nodes, item => item),
@@ -126,7 +126,7 @@ export const graphQLSummary = <TFlex = void, TBase = void>(
         //   //   }),
         // },
       },
-    } as GraphQLVisitor)(ctx);
+    } as GraphQLVisitor<Ctx<TFlex, TBase>>)(ctx);
     return ctx;
   };
 };

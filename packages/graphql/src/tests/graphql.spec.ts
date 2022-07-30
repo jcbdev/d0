@@ -1,4 +1,3 @@
-import { Context } from '@d0/core';
 import { Location } from 'graphql';
 import { graphQL } from '../lib/graphql';
 
@@ -12,11 +11,10 @@ type test {
 }
     `;
 
-    let ctx: Context = { $tmpl: {} };
+    let ctx: any = {};
     ctx = await graphQL('ast', gql)(ctx);
     // expect(ctx).toEqual({});
     expect(ctx).toMatchObject({
-      $tmpl: {},
       ast: {
         kind: 'Document',
         definitions: [

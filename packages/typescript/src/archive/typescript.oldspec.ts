@@ -1,4 +1,3 @@
-import { Context } from '@d0/core';
 import { typescript } from '../lib/typescript';
 import { createSourceFile, ScriptTarget } from 'typescript';
 
@@ -12,7 +11,7 @@ function x(test: string) {
 x(hello);
     `;
 
-    let ctx: Context = { $tmpl: {} };
+    let ctx: any = {};
     ctx = await typescript('ast', 'x.ts', ts, ScriptTarget.Latest)(ctx);
 
     // expect(JSON.parse(JSON.stringify(ctx.ast, null, 2))).toEqual({

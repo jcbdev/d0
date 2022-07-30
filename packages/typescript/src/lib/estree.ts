@@ -1,8 +1,12 @@
-import { Action, Context } from '@d0/core';
+import { D0 } from '@d0/core';
 import { parse, TSESTreeOptions } from '@typescript-eslint/typescript-estree';
 
-export const estree = (name: string, ts: string, options?: TSESTreeOptions): Action => {
-  return async (ctx: Context) => {
+export const estree = <TFlex = void, TBase = void>(
+  name: string,
+  ts: string,
+  options?: TSESTreeOptions
+): D0<TFlex, TBase> => {
+  return async ctx => {
     ctx[name] = parse(ts, options);
     return ctx;
   };

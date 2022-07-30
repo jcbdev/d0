@@ -1,6 +1,6 @@
 {
   "name": "d0",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "license": "MIT",
   "scripts": {},
   "devDependencies": {
@@ -25,11 +25,13 @@
     "@nrwl/node": "^13.2.1",
     "@typescript-eslint/typescript-estree": "^4.33.0",
     "change-case": "^4.1.2",
+    "clone-deep": "^4.0.1",
     "cross-fetch": "^3.1.4",
     "graphql": "^16.0.1",
     "js-yaml": "^3.14.1",
     "jsonata": "^1.8.5",
     "prettier": "^2.3.1",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "uuid": "^8.3.2"
   }
 }
