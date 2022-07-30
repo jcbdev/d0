@@ -20,5 +20,7 @@ export const code = async <TD0, TAst, TNode, DFlex = void>(
     $updates: [],
     ...withCtx,
   } as Ctx<DFlex, CodeContext<TAst, TNode>>;
-  return await action($d0, ctx);
+  return await (
+    await action($d0, ctx)
+  )(ctx);
 };
