@@ -1,6 +1,6 @@
-# d0
+# d0-it
 
-d0 - simple and hackable templates and code generation.
+d0-it - simple and hackable templates and code generation.
 
 **_THIS IS ALPHA - USE AT OWN RISK!_**
 
