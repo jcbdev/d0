@@ -1,5 +1,5 @@
-import { code, CodeAdapter, CodeContext } from '@d0/code';
-import { CoreD0s, Ctx, D0, StartD0 } from '@d0/core';
+import { code, CodeAdapter, CodeContext } from '@d0-it/code';
+import { CoreD0s, Ctx, D0, StartD0 } from '@d0-it/core';
 import { AST, TSESTree } from '@typescript-eslint/typescript-estree';
 import { TSCodeContext, TSESTreeOptions, TypescriptCtx } from './types';
 import { typescriptAdapter } from './typescript-adapter';

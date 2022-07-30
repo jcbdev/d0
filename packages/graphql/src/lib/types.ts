@@ -1,5 +1,5 @@
-import { Ctx } from '@d0/core';
-import { EnterLeave, EnterNode, LeaveNode, NodeInfo, VisitIntention, Visitor } from '@d0/walker';
+import { Ctx } from '@d0-it/core';
+import { EnterLeave, EnterNode, LeaveNode, NodeInfo, VisitIntention, Visitor } from '@d0-it/walker';
 import { ASTKindToNode, ASTNode } from 'graphql/language/ast';
 
 export type GraphQLEnterLeaveVisitor<TCtx = Ctx> = {

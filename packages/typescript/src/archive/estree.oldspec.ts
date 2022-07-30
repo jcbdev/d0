@@ -1,5 +1,5 @@
 import { estree } from '../lib/estree';
-import { prettyAST } from '@d0/prettier';
+import { prettyAST } from '@d0-it/prettier';
 import { createSourceFile, ScriptTarget } from 'typescript';
 
 describe('estree', () => {

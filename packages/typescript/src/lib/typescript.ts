@@ -1,4 +1,4 @@
-import { D0 } from '@d0/core';
+import { D0 } from '@d0-it/core';
 import { createSourceFile, ScriptTarget } from 'typescript';
 
 export const typescript = <TFlex = void, TBase = void>(

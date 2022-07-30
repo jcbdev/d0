@@ -1,5 +1,5 @@
-import { code, CodeAdapter, CodeContext } from '@d0/code';
-import { CoreD0s, Ctx, D0, StartD0 } from '@d0/core';
+import { code, CodeAdapter, CodeContext } from '@d0-it/code';
+import { CoreD0s, Ctx, D0, StartD0 } from '@d0-it/core';
 import { TSESTree, AST, TSESTreeOptions as _TSESTreeOptions } from '@typescript-eslint/typescript-estree';
 import { FunctionState } from './walker/types';
 

@@ -6,20 +6,20 @@ d0 - simple and hackable templates and code generation.
 
 ## Installation
 
-`npm install @d0/core`
+`npm install @d0-it/core`
 
 ## Packages
 
-| Package                                         |                Description                |              Status |
-| :---------------------------------------------- | :---------------------------------------: | ------------------: |
-| [@d0/core](packages/core/README.md)             |     Main core utilities and functions     |             Working |
-| [@d0/code](packages/code/README.md)             |          Mutate and inject code           |         Not Working |
-| [@d0/from](packages/from/README.md)             | Plugins to input from different filetypes | Basic Functionality |
-| [@d0/graphql](packages/graphql/README.md)       |      Functions to manipulate graphql      | Basic Functionality |
-| [@d0/prettier](packages/prettier/README.md)     |         Output code and clean up          | Basic Functionality |
-| [@d0/pull](packages/pull/README.md)             |           Download or pull code           | Basic Functionality |
-| [@d0/typescript](packages/typescript/README.md) |     AST and processors for typescript     |         Not Working |
-| [@d0/walker](packages/walker/README.md)         |       Plugin to create AST visitors       | Basic Functionality |
+| Package                                            |                Description                |              Status |
+| :------------------------------------------------- | :---------------------------------------: | ------------------: |
+| [@d0-it/core](packages/core/README.md)             |     Main core utilities and functions     |             Working |
+| [@d0-it/code](packages/code/README.md)             |          Mutate and inject code           |         Not Working |
+| [@d0-it/from](packages/from/README.md)             | Plugins to input from different filetypes | Basic Functionality |
+| [@d0-it/graphql](packages/graphql/README.md)       |      Functions to manipulate graphql      | Basic Functionality |
+| [@d0-it/prettier](packages/prettier/README.md)     |         Output code and clean up          | Basic Functionality |
+| [@d0-it/pull](packages/pull/README.md)             |           Download or pull code           | Basic Functionality |
+| [@d0-it/typescript](packages/typescript/README.md) |     AST and processors for typescript     |         Not Working |
+| [@d0-it/walker](packages/walker/README.md)         |       Plugin to create AST visitors       | Basic Functionality |
 
 ## Examples
 

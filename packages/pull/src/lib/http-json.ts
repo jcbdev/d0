@@ -1,4 +1,4 @@
-import { D0 } from '@d0/core';
+import { D0 } from '@d0-it/core';
 import fetch from 'cross-fetch';
 
 export function httpJson<TFlex = void, TBase = void>(name: string, url: string): D0<TFlex, TBase> {

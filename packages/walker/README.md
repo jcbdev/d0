@@ -1,4 +1,4 @@
-# @d0/walker
+# @d0-it/walker
 
 This library was generated with [Nx](https://nx.dev).
 

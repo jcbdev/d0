@@ -1,6 +1,6 @@
 import { typescriptAdapter } from '../lib/typescript-adapter';
 import { collectSubTypes, mapType } from '../lib/query/collect-sub-types';
-import { collect, find } from '@d0/walker';
+import { collect, find } from '@d0-it/walker';
 import { TSESTree } from '@typescript-eslint/typescript-estree';
 
 const simple_type = (t: string) => `let hello: ${t};`;

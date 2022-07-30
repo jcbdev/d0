@@ -1,4 +1,4 @@
-# @d0/pull
+# @d0-it/pull
 
 This library was generated with [Nx](https://nx.dev).
 

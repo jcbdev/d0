@@ -28,6 +28,12 @@
         "main": "packages/walker/src/index.ts",
         "assets": ["packages/walker/*.md"]
       }
+    },
+    "deploy": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   },
   "tags": ["scope:public", "type:util", "target:all"]

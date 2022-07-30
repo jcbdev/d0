@@ -1,5 +1,5 @@
 import { TSESTreeOptions, TypescriptCtx } from '../types';
-import { NodeInfo, collect, CollectResult, CollectMappers } from '@d0/walker';
+import { NodeInfo, collect, CollectResult, CollectMappers } from '@d0-it/walker';
 import { TSESTree } from '@typescript-eslint/types';
 import { walkTypes } from '../walker/types-walker';
 import { nodeStatement } from '../walker/node-statement';

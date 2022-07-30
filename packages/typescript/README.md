@@ -1,4 +1,4 @@
-# @d0/typescript
+# @d0-it/typescript
 
 This library was generated with [Nx](https://nx.dev).
 

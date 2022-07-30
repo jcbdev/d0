@@ -1,5 +1,13 @@
-import { CodeAdapter, CodeContext, Mutate, NodeState, CodeUpdate, SourceAst, getStatements } from '@d0/code';
-import { prettyAST } from '@d0/prettier';
+import {
+  CodeAdapter,
+  CodeContext,
+  Mutate,
+  NodeState,
+  CodeUpdate,
+  SourceAst,
+  getStatements,
+} from '@d0-it/code';
+import { prettyAST } from '@d0-it/prettier';
 import {
   parse,
   TSESTree,

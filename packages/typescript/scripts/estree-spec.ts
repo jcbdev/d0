@@ -1,5 +1,5 @@
-import { d0, sequence, template } from '@d0/core';
-import { httpJson } from '@d0/pull';
+import { d0, sequence, template } from '@d0-it/core';
+import { httpJson } from '@d0-it/pull';
 
 const main = async () => {
   let ctx = await d0(

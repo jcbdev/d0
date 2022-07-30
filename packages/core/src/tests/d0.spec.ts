@@ -15,7 +15,7 @@ describe('execute a function', () => {
         return coreD0s<MyCtx>();
       },
       (d0, ctx) => {
-        return mockD01(ctx);
+        return mockD01;
       }
     );
     expect(result).toEqual({
@@ -35,7 +35,7 @@ describe('execute a function', () => {
         return coreD0s<MyCtx>();
       },
       (d0$, ctx) => {
-        return mockD01(ctx);
+        return mockD01;
       },
       { existing: true }
     );

@@ -1,6 +1,6 @@
 import { typescriptAdapter } from '../lib/typescript-adapter';
 import { collectFunctions, mapFunction } from '../lib/query/collect-functions';
-import { find, NodeInfo } from '@d0/walker';
+import { find, NodeInfo } from '@d0-it/walker';
 import { FunctionLike } from '@typescript-eslint/types/dist/ast-spec';
 
 const func_body = `{ return 1; }`;

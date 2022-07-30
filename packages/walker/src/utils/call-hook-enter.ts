@@ -1,4 +1,4 @@
-import { Ctx } from '@d0/core';
+import { Ctx } from '@d0-it/core';
 import { FlexEnterLeaveVisitor, NodeInfo, RegexEnterNode, VisitIntention, Visitor } from '../lib/types';
 import matchProp from './match-prop';
 

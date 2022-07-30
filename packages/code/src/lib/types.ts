@@ -1,4 +1,4 @@
-import { Ctx, D0 } from '@d0/core';
+import { Ctx, D0 } from '@d0-it/core';
 
 export type SourceAst<TAst = any> = {
   sourceCode: string;

@@ -28,6 +28,12 @@
         "main": "packages/graphql/src/index.ts",
         "assets": ["packages/graphql/*.md"]
       }
+    },
+    "deploy": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   },
   "tags": ["scope:public", "type:util", "target:all"]

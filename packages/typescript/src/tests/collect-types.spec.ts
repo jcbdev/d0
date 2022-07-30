@@ -1,6 +1,6 @@
 import { typescriptAdapter } from '../lib/typescript-adapter';
 import { collectTypes, mapType } from '../lib/query/collect-types';
-import { find } from '@d0/walker';
+import { find } from '@d0-it/walker';
 
 const simple_type = (t: string) => `let hello: ${t};`;
 const type_def = (t: string) => `type hello = ${t};`;

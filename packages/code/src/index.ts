@@ -1,4 +1,4 @@
-import { Or, D0 } from '@d0/core';
+import { Or, D0 } from '@d0-it/core';
 import { d0With } from './lib/d0-with';
 import { getFunctions } from './lib/get-functions';
 import { getStatements } from './lib/get-statements';

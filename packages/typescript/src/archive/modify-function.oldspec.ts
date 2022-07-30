@@ -1,7 +1,15 @@
-import { CodeContext, CodeD0s, codeD0s, FunctionTransforms, getFunctions, NodeD0, NodeState } from '@d0/code';
+import {
+  CodeContext,
+  CodeD0s,
+  codeD0s,
+  FunctionTransforms,
+  getFunctions,
+  NodeD0,
+  NodeState,
+} from '@d0-it/code';
 import { AST, TSESTree, TSESTreeOptions } from '@typescript-eslint/typescript-estree';
 import { typescriptCode } from '../lib/typescript-code';
-import { coreD0s, CoreD0s, Ctx } from '@d0/core';
+import { coreD0s, CoreD0s, Ctx } from '@d0-it/core';
 import { TSCodeContext, TypescriptCtx } from '../lib/types';
 import { typescriptD0s } from '../lib/typescript-d0s';
 import { rename__moduleFunctionDeclarations } from '../lib/adapters/find-function';

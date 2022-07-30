@@ -1,4 +1,4 @@
-import { Ctx, D0, StartD0 } from '@d0/core';
+import { Ctx, D0, StartD0 } from '@d0-it/core';
 import { NodeD0 } from '..';
 import { CodeAdapter, CodeContext } from './types';
 import cloneDeep from 'clone-deep';

@@ -1,4 +1,4 @@
-import { ConditionD0, Ctx, D0, ItemD0, MergeD0, Or, ResolveD0 } from '@d0/core';
+import { ConditionD0, Ctx, D0, ItemD0, MergeD0, Or, ResolveD0 } from '@d0-it/core';
 import { PathLike } from 'fs';
 import { FileHandle } from 'fs/promises';
 import { ASTNode } from 'graphql';

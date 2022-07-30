@@ -1,4 +1,4 @@
-# @d0/from
+# @d0-it/from
 
 This library was generated with [Nx](https://nx.dev).
 

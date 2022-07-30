@@ -1,4 +1,4 @@
-import { D0, Or, ResolveD0 } from '@d0/core';
+import { D0, Or, ResolveD0 } from '@d0-it/core';
 import { Options } from 'prettier';
 import { pretty } from './lib/pretty';
 import prettier from 'prettier';

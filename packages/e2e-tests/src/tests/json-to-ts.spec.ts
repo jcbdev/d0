@@ -1,6 +1,6 @@
-import { d0, output, sequence, template, resolve, coreD0s } from '@d0/core';
-import { fromD0s, fromJson } from '@d0/from';
-import { pretty, prettyD0s } from '@d0/prettier';
+import { d0, output, sequence, template, resolve, coreD0s } from '@d0-it/core';
+import { fromD0s, fromJson } from '@d0-it/from';
+import { pretty, prettyD0s } from '@d0-it/prettier';
 import { writeFile, readFile } from 'fs/promises';
 import path from 'path';
 import os from 'os';

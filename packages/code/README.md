@@ -1,4 +1,4 @@
-# @d0/code
+# @d0-it/code
 
 This library was generated with [Nx](https://nx.dev).
 

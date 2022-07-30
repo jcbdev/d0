@@ -1,4 +1,4 @@
-import { D0 } from '@d0/core';
+import { D0 } from '@d0-it/core';
 import { parse, TSESTreeOptions } from '@typescript-eslint/typescript-estree';
 
 export const estree = <TFlex = void, TBase = void>(

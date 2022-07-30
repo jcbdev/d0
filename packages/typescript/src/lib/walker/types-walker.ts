@@ -1,4 +1,4 @@
-import { NodeInfo, visit } from '@d0/walker';
+import { NodeInfo, visit } from '@d0-it/walker';
 import { typescriptSelector } from './typescript-selector';
 import { TypescriptVisitor } from './types';
 import { TSESTree } from '@typescript-eslint/types';

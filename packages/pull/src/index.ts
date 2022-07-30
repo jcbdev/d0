@@ -2,7 +2,7 @@ export { httpText } from './lib/http-text';
 export { httpJson } from './lib/http-json';
 import { httpText } from './lib/http-text';
 import { httpJson } from './lib/http-json';
-import { D0, Or } from '@d0/core';
+import { D0, Or } from '@d0-it/core';
 
 export type PullD0s<DFlex = void, DBase = void> = {
   httpJson: <TFlex = DFlex, TBase = DBase>(name: string, url: string) => D0<TFlex, TBase>;

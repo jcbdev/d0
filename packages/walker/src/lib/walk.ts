@@ -1,4 +1,4 @@
-import { Ctx, D0, ResolveD0 } from '@d0/core';
+import { Ctx, D0, ResolveD0 } from '@d0-it/core';
 import { visit } from '../utils/visit';
 import { NodeSelector, Visitor } from './types';
 

@@ -1,5 +1,5 @@
-import { Ctx, D0, ResolveD0 } from '@d0/core';
-import { walk } from '@d0/walker';
+import { Ctx, D0, ResolveD0 } from '@d0-it/core';
+import { walk } from '@d0-it/walker';
 import { ASTNode } from 'graphql';
 import { graphQLSelector } from './graphql-selector';
 import { GraphQLVisitor } from './types';

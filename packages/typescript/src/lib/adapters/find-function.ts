@@ -1,4 +1,4 @@
-import { NodeState, CodeUpdate, SourceAst } from '@d0/code';
+import { NodeState, CodeUpdate, SourceAst } from '@d0-it/code';
 import { AST, TSESTree } from '@typescript-eslint/typescript-estree';
 import jsonata from 'jsonata';
 import { TSESTreeOptions } from '../types';

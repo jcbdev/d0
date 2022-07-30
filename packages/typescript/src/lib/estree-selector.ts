@@ -1,4 +1,4 @@
-import { NodeSelector } from '@d0/walker';
+import { NodeSelector } from '@d0-it/walker';
 import { pascalCase } from 'pascal-case';
 
 export const estreeSelector: NodeSelector = {

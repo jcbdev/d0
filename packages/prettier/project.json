@@ -28,6 +28,12 @@
         "main": "packages/prettier/src/index.ts",
         "assets": ["packages/prettier/*.md"]
       }
+    },
+    "deploy": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   },
   "tags": ["scope:public", "type:util", "target:all"]

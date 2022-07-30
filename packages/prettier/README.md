@@ -1,4 +1,4 @@
-# @d0/prettier
+# @d0-it/prettier
 
 This library was generated with [Nx](https://nx.dev).
 

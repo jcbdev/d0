@@ -1,4 +1,4 @@
-import { code, CodeAdapter, CodeContext, NodeD0 } from '@d0/code';
+import { code, CodeAdapter, CodeContext, NodeD0 } from '@d0-it/code';
 import { parse, TSESTree, AST, TSESTreeOptions } from '@typescript-eslint/typescript-estree';
 import { typescriptCode } from '../lib/typescript-code';
 

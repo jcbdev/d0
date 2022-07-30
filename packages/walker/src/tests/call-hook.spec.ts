@@ -1,7 +1,7 @@
 import callHookLeave from '../utils/call-hook-leave';
 import callHookEnter from '../utils/call-hook-enter';
 import { VisitIntention, Visitor } from '../lib/types';
-import { Ctx } from '@d0/core';
+import { Ctx } from '@d0-it/core';
 
 describe('call hooks on visitor', () => {
   it('should call an enter hook if it exists under object shape', async () => {

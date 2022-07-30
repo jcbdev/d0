@@ -28,6 +28,12 @@
         "main": "packages/pull/src/index.ts",
         "assets": ["packages/pull/*.md"]
       }
+    },
+    "deploy": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   },
   "tags": ["scope:public", "type:util", "target:all"]

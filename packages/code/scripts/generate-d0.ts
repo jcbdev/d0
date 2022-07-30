@@ -1,6 +1,6 @@
-import { d0, sequence, template, output } from '@d0/core';
-import { fromText } from '@d0/from';
-import { pretty } from '@d0/prettier';
+import { d0, sequence, template, output } from '@d0-it/core';
+import { fromText } from '@d0-it/from';
+import { pretty } from '@d0-it/prettier';
 
 const main = async () => {
   // let ctx = await d0(

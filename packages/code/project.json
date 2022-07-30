@@ -28,6 +28,12 @@
         "main": "packages/code/src/index.ts",
         "assets": ["packages/code/*.md"]
       }
+    },
+    "deploy": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   },
   "tags": ["scope:public", "type:util", "target:all"]

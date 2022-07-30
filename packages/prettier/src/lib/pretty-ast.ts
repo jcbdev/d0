@@ -1,5 +1,5 @@
 import prettier from 'prettier';
-import { D0, ResolveD0 } from '@d0/core';
+import { D0, ResolveD0 } from '@d0-it/core';
 
 export function prettyAST<TFlex = void, TBase = void>(
   name: string,

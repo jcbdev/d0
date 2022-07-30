@@ -3,7 +3,7 @@ import isArray from './is-array';
 import { NodeInfo, NodeSelector, VisitIntention, Visitor } from '../lib/types';
 import callHookLeave from './call-hook-leave';
 import callHookEnter from './call-hook-enter';
-import { Ctx } from '@d0/core';
+import { Ctx } from '@d0-it/core';
 import cloneDeep from 'clone-deep';
 
 export const visit = async <T = any, TCtx = Ctx>(

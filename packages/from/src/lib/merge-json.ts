@@ -1,4 +1,4 @@
-import { D0, merge } from '@d0/core';
+import { D0, merge } from '@d0-it/core';
 import { FileHandle, readFile } from 'fs/promises';
 import { PathLike } from 'fs';
 

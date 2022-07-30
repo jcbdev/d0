@@ -1,4 +1,4 @@
-import { D0 } from '@d0/core';
+import { D0 } from '@d0-it/core';
 import { CodeContext, NodeD0, NodeState, ResolveNode } from './types';
 
 export const d0With = <TFlex, TAst, TNode>(

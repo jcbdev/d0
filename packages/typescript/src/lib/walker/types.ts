@@ -1,6 +1,6 @@
-import { NodeState } from '@d0/code';
-import { Ctx } from '@d0/core';
-import { EnterLeave, EnterNode, LeaveNode, NodeInfo, Visitor } from '@d0/walker';
+import { NodeState } from '@d0-it/code';
+import { Ctx } from '@d0-it/core';
+import { EnterLeave, EnterNode, LeaveNode, NodeInfo, Visitor } from '@d0-it/walker';
 import { AST_NODE_TYPES, TSESTree } from '@typescript-eslint/types';
 
 export type ASTNodeTypeToNode = {

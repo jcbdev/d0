@@ -1,6 +1,6 @@
-import { d0, output, sequence, template, resolve, CoreD0s, coreD0s, baseD0s, BaseD0s } from '@d0/core';
-import { loadGraphQL, graphQLSummary, GraphQLD0s, graphQLD0s } from '@d0/graphql';
-import { pretty, prettyD0s, PrettyD0s } from '@d0/prettier';
+import { d0, output, sequence, template, resolve, CoreD0s, coreD0s, baseD0s, BaseD0s } from '@d0-it/core';
+import { loadGraphQL, graphQLSummary, GraphQLD0s, graphQLD0s } from '@d0-it/graphql';
+import { pretty, prettyD0s, PrettyD0s } from '@d0-it/prettier';
 import { writeFile, readFile } from 'fs/promises';
 import path from 'path';
 import os from 'os';

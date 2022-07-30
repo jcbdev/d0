@@ -16,15 +16,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@d0/code": ["packages/code/src/index.ts"],
-      "@d0/core": ["packages/core/src/index.ts"],
-      "@d0/e2e-tests": ["packages/e2e-tests/src/index.ts"],
-      "@d0/from": ["packages/from/src/index.ts"],
-      "@d0/graphql": ["packages/graphql/src/index.ts"],
-      "@d0/prettier": ["packages/prettier/src/index.ts"],
-      "@d0/pull": ["packages/pull/src/index.ts"],
-      "@d0/typescript": ["packages/typescript/src/index.ts"],
-      "@d0/walker": ["packages/walker/src/index.ts"]
+      "@d0-it/code": ["packages/code/src/index.ts"],
+      "@d0-it/core": ["packages/core/src/index.ts"],
+      "@d0-it/e2e-tests": ["packages/e2e-tests/src/index.ts"],
+      "@d0-it/from": ["packages/from/src/index.ts"],
+      "@d0-it/graphql": ["packages/graphql/src/index.ts"],
+      "@d0-it/prettier": ["packages/prettier/src/index.ts"],
+      "@d0-it/pull": ["packages/pull/src/index.ts"],
+      "@d0-it/typescript": ["packages/typescript/src/index.ts"],
+      "@d0-it/walker": ["packages/walker/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

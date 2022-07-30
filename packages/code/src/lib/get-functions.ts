@@ -1,4 +1,4 @@
-import { Ctx } from '@d0/core';
+import { Ctx } from '@d0-it/core';
 import { CodeContext, NodeState, ResolveNode } from './types';
 
 export const getFunctions = <TFlex, TAst, TNode>(filter?: string): ResolveNode<TFlex, TAst, TNode> => {
