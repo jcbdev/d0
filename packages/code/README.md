@@ -1,4 +1,4 @@
-# d0-it
+# @d0-it/code
 
 d0-it - simple and hackable templates and code generation.
 
@@ -6,7 +6,7 @@ d0-it - simple and hackable templates and code generation.
 
 ## Installation
 
-`npm install @d0-it/core @d0-it/code`
+`npm install @d0-it/core`
 
 ## Packages
 
@@ -35,27 +35,21 @@ it('generate a type - flexible typing', async () => {
   await writeFile(
     fileName,
     /* graphql */ `
-        type Post {
-          id: ID!
-          comments: [Comment]
-          content: String
-        }
+type Post {
+  id: ID!
+  comments: [Comment]
+  content: String
+}
 
-        type Comment {
-          id: ID!
-          postId: ID!
-          message: String
-        }
+type Comment {
+  id: ID!
+  postId: ID!
+  message: String
+}
     `
   );
 
-  const configure = () => ({
-    ...coreD0s<any>(),
-    ...graphQLD0s<any>(),
-    ...prettyD0s<any>(),
-  });
-
-  let resCtx: any = await d0(configure, (d0, ctx: any) => {
+  let resCtx: any = await d0((ctx, d0) => {
     return d0.sequence([
       d0.loadGraphQL('gql', fileName),
       d0.graphQLSummary('summary', ctx => ctx.gql),
@@ -122,26 +116,48 @@ export type Comment = {
 ### STRONGLY TYPED (gql to ts)
 
 ```typescript
-it.only('generate a type - strongly typed', async () => {
+it('generate a type - strongly typed', async () => {
   let fileName = rndFileName();
   let outFileName = rndFileNameTS();
 
   await writeFile(
     fileName,
     /* graphql */ `
-      type Post {
-        id: ID!
-        comments: [Comment]
-        content: String
-      }
+type Post {
+  id: ID!
+  comments: [Comment]
+  content: String
+}
 
-      type Comment {
-        id: ID!
-        postId: ID!
-        message: String
-      }
+type Comment {
+  id: ID!
+  postId: ID!
+  message: String
+}
     `
   );
+
+  type jsTypeDefinition = {
+    name: string;
+    type: string;
+    fields: Record<
+      string,
+      {
+        type: string;
+        nullable: boolean;
+        array: boolean;
+        arguments?: Record<
+          string,
+          {
+            type: string;
+            nullable: boolean;
+            array: boolean;
+            defaultValue?: any;
+          }
+        >;
+      }
+    >;
+  };
 
   type ProcessingContext = {
     result: string;
@@ -151,14 +167,8 @@ it.only('generate a type - strongly typed', async () => {
   };
 
   type d0s<T = ProcessingContext> = BaseD0s<T> & CoreD0s<T> & GraphQLD0s<T> & PrettyD0s<T>;
-  const configure = <T = ProcessingContext>(): d0s<T> => ({
-    ...baseD0s<T>(),
-    ...coreD0s<T>(),
-    ...graphQLD0s<T>(),
-    ...prettyD0s<T>(),
-  });
 
-  let resCtx = await d0<d0s<ProcessingContext>, ProcessingContext>(configure, async (d0, ctx) => {
+  let resCtx = await d0<d0s<ProcessingContext>, ProcessingContext>(async (ctx, d0) => {
     return await d0.sequence([
       d0.loadGraphQL('gql', fileName),
       d0.graphQLSummary('summary', ctx => ctx.gql),

@@ -131,7 +131,7 @@ export type FunctionState<T> = NodeState<T> & {
   expression: boolean;
   async: boolean;
   arguments?: Argument[];
-  return?: ReturnType;
+  return?: Return;
   statement: string;
 };
 

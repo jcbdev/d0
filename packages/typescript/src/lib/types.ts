@@ -9,4 +9,4 @@ export type TSCodeContext = CodeContext<AST<TSESTreeOptions>, TSESTree.Node> & {
     functions?: { [K: string]: FunctionState<any> };
   };
 };
-export type TypescriptCtx<TFlex = void> = Ctx<TFlex, TSCodeContext>;
+export type TypescriptCtx<T = any> = Ctx<T>;

@@ -20,12 +20,9 @@ const withOptional = (node: any, original: any, fields: string[]) => {
   return node;
 };
 
-export const graphQLSummary = <TFlex = void, TBase = void>(
-  name: string,
-  resolve: ResolveD0<ASTNode, TFlex, TBase>
-): D0<TFlex, TBase> => {
+export const graphQLSummary = <T = any>(name: string, resolve: ResolveD0<ASTNode, T>): D0<T> => {
   return async ctx => {
-    await walk<ASTNode, TFlex, TBase>(name, resolve, graphQLSelector, {
+    await walk<ASTNode, T>(name, resolve, graphQLSelector, {
       enter: {
         Location: (node, info, ctx) => ({ node: null, intention: 'REMOVE' }),
         arguments: node => ({ node: node, intention: node.length ? 'PROCESS' : 'REMOVE' }),
@@ -126,7 +123,7 @@ export const graphQLSummary = <TFlex = void, TBase = void>(
         //   //   }),
         // },
       },
-    } as GraphQLVisitor<Ctx<TFlex, TBase>>)(ctx);
+    } as GraphQLVisitor<Ctx<T>>)(ctx);
     return ctx;
   };
 };

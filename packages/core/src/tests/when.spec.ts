@@ -3,11 +3,11 @@ import { D0 } from '../lib/types';
 
 describe('conditionally execute an D0', () => {
   it('should run true D0', async () => {
-    let trueD0: D0<'Flex'> = ctx => {
+    let trueD0: D0<any> = ctx => {
       ctx['result'] = true;
       return ctx;
     };
-    let falseD0: D0<'Flex'> = ctx => {
+    let falseD0: D0<any> = ctx => {
       ctx['result'] = false;
       return ctx;
     };
@@ -19,11 +19,11 @@ describe('conditionally execute an D0', () => {
   });
 
   it('should run false D0', async () => {
-    let trueD0: D0<'Flex'> = ctx => {
+    let trueD0: D0<any> = ctx => {
       ctx['result'] = true;
       return ctx;
     };
-    let falseD0: D0<'Flex'> = ctx => {
+    let falseD0: D0<any> = ctx => {
       ctx['result'] = false;
       return ctx;
     };
@@ -35,11 +35,11 @@ describe('conditionally execute an D0', () => {
   });
 
   it('condition has access to ctx', async () => {
-    let trueD0: D0<'Flex'> = ctx => {
+    let trueD0: D0<any> = ctx => {
       ctx['result'] = true;
       return ctx;
     };
-    let falseD0: D0<'Flex'> = ctx => {
+    let falseD0: D0<any> = ctx => {
       ctx['result'] = false;
       return ctx;
     };

@@ -130,7 +130,7 @@ describe('create a summary of GQL types', () => {
       },
     };
 
-    ctx = await graphQLSummary<'Flex'>('summary', ctx => ctx.ast)(ctx);
+    ctx = await graphQLSummary<any>('summary', ctx => ctx.ast)(ctx);
     expect(ctx.summary).toEqual({
       arguments: {
         name: 'hello',
@@ -162,7 +162,7 @@ describe('create a summary of GQL types', () => {
       },
     };
 
-    ctx = await graphQLSummary<'Flex'>('summary', ctx => ctx.ast)(ctx);
+    ctx = await graphQLSummary<any>('summary', ctx => ctx.ast)(ctx);
     expect(ctx.summary).toEqual({
       name: 'withdirective',
     });
@@ -178,7 +178,7 @@ describe('create a summary of GQL types', () => {
       `;
 
     let ctx: any = { ast: parse(gql) };
-    ctx = await graphQLSummary<'Flex'>('summary', ctx => ctx.ast)(ctx);
+    ctx = await graphQLSummary<any>('summary', ctx => ctx.ast)(ctx);
     // console.log(JSON.stringify(ctx, null, 2));
     expect(ctx.summary).toEqual([
       {
@@ -215,7 +215,7 @@ describe('create a summary of GQL types', () => {
       `;
 
     let ctx: any = { ast: parse(gql) };
-    ctx = await graphQLSummary<'Flex'>('summary', ctx => ctx.ast)(ctx);
+    ctx = await graphQLSummary<any>('summary', ctx => ctx.ast)(ctx);
     // console.log(JSON.stringify(ctx, null, 2));
     expect(ctx.summary).toEqual([
       {
@@ -252,7 +252,7 @@ type Starship {
       `;
 
     let ctx: any = { ast: parse(gql) };
-    ctx = await graphQLSummary<'Flex'>('summary', ctx => ctx.ast)(ctx);
+    ctx = await graphQLSummary<any>('summary', ctx => ctx.ast)(ctx);
     // console.log(JSON.stringify(ctx.ast, null, 2));
     expect(ctx.summary).toEqual([
       {

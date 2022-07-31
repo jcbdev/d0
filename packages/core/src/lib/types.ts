@@ -1,39 +1,27 @@
-export type CtxBase<T = void> = T extends void ? {} : T & {};
+// export type CtxBase<T = void> = T extends void ? {} : T & {};
 
-export type Ctx<TFlex = void, TBase = void> = TFlex extends void
-  ? CtxBase<TBase>
-  : TFlex extends 'Flex'
-  ? ({ [K in keyof CtxBase<TBase>]: CtxBase<TBase>[K] } & Record<string, any>) & CtxBase<TBase>
-  : TFlex & CtxBase<TBase>;
+// export type Ctx<T = any> = TFlex extends void
+//   ? CtxBase<TBase>
+//   : TFlex extends any
+//   ? ({ [K in keyof CtxBase<TBase>]: CtxBase<TBase>[K] } & Record<string, any>) & CtxBase<TBase>
+//   : TFlex & CtxBase<TBase>;
 
-export type D0<TFlex = void, TBase = void> = (
-  ctx: Ctx<TFlex, TBase>
-) => Promise<Ctx<TFlex, TBase>> | Ctx<TFlex, TBase>;
+export type Ctx<T = any> = T extends void ? {} : T;
 
-export type StartD0<TD0, TFlex = void, TBase = void> = (
-  d0$: TD0,
-  ctx: Ctx<TFlex, TBase>
-) => Promise<D0<TFlex, TBase>> | D0<TFlex, TBase>;
+export type D0<T = any> = (ctx: Ctx<T>) => Promise<Ctx<T>> | Ctx<T>;
 
-export type ItemD0<T, TFlex = void, TBase = void> = (
-  item: T | T[],
-  ctx: Ctx<TFlex, TBase>
-) => Promise<Ctx<TFlex, TBase>> | Ctx<TFlex, TBase>;
+export type StartD0<TD0, T = any> = (ctx: Ctx<T>, d0$: TD0) => Promise<D0<T>> | D0<T>;
+
+export type ItemD0<IType = any, T = any> = (item: IType | IType[], ctx: Ctx<T>) => Promise<Ctx<T>> | Ctx<T>;
 
 export type MergeD0<TSource, TTarget> = (source: TSource, target: TTarget) => Promise<TTarget> | TTarget;
 
-export type ResolveD0<TReturn extends any, TFlex = void, TBase = void> = (
-  ctx: Ctx<TFlex, TBase>
-) => Promise<TReturn> | TReturn;
+export type ResolveD0<TReturn extends any = any, T = any> = (ctx: Ctx<T>) => Promise<TReturn> | TReturn;
 
-export type ConditionD0<TFlex = void, TBase = void> = ResolveD0<boolean, TFlex, TBase>;
+export type ConditionD0<T = any> = ResolveD0<boolean, T>;
 
 export type Or<T = void, TOr = void> = T extends void ? TOr : T;
 
-export type BaseD0s<DFlex = void, DBase = void> = {
-  d0: <TD0, DFlex = void, DBase = void>(
-    startD0: StartD0<TD0, DFlex, DBase>,
-    d0?: <TFlex = DFlex, TBase = DBase>() => TD0,
-    withCtx?: Ctx<DFlex, DBase>
-  ) => Promise<Ctx<DFlex, DBase>>;
+export type BaseD0s<D = any, TD0 = any> = {
+  d0: <TD0 = any, D = any>(startD0: StartD0<TD0, D>, withCtx?: Ctx<D>, d0?: () => TD0) => Promise<Ctx<D>>;
 };

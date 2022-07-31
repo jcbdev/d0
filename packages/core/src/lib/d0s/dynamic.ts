@@ -1,6 +1,6 @@
 import { D0 } from '../types';
 
-export const dynamic = <TFlex = void, TBase = void>(name: string, template: string): D0<TFlex, TBase> => {
+export const dynamic = <T = any>(name: string, template: string): D0<T> => {
   return ctx => {
     const names = Object.keys(ctx);
     const vals = Object.values(ctx);

@@ -1,11 +1,11 @@
 import prettier from 'prettier';
 import { D0, ResolveD0 } from '@d0-it/core';
 
-export function prettyAST<TFlex = void, TBase = void>(
+export function prettyAST<T = any>(
   name: string,
-  resolve: ResolveD0<string, TFlex, TBase>,
+  resolve: ResolveD0<string, T>,
   options?: prettier.Options
-): D0<TFlex, TBase> {
+): D0<T> {
   return async ctx => {
     ctx[name] = (prettier as any).__debug.formatAST(await resolve(ctx), {
       originalText: '',

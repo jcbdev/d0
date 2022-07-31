@@ -1,8 +1,6 @@
 import { d0, output, sequence, template, resolve, coreD0s } from '@d0-it/core';
 import '@d0-it/from';
 import '@d0-it/prettier';
-import { fromD0s, fromJson } from '@d0-it/from';
-import { pretty, prettyD0s } from '@d0-it/prettier';
 import { writeFile, readFile } from 'fs/promises';
 import path from 'path';
 import os from 'os';
@@ -42,13 +40,7 @@ describe('Generate some typescript from a JSON source', () => {
       properties: Record<string, string>;
     };
 
-    // const configure = () => ({
-    //   ...coreD0s<any>(),
-    //   ...fromD0s<any>(),
-    //   ...prettyD0s<any>(),
-    // });
-
-    let resCtx: any = await d0<any>((d0, ctx: any) => {
+    let resCtx: any = await d0<any>((ctx, d0) => {
       return d0.sequence([
         d0.fromJson('baseType', fileName),
         d0.template('baseType', ({ baseType: { name, properties } }: { baseType: jsTypeDefinition }) => {

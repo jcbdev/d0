@@ -1,7 +1,7 @@
 import { D0, Ctx } from '../types';
 
-export const reset = <TFlex = void, TBase = void>(): D0<TFlex, TBase> => {
+export const reset = <T = any>(): D0<T> => {
   return ctx => {
-    return {} as Ctx<TFlex, TBase>;
+    return {} as Ctx<T>;
   };
 };

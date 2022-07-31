@@ -7,35 +7,18 @@ import { prettyAST } from './lib/pretty-ast';
 export * from './lib/pretty';
 export * from './lib/pretty-ast';
 
-export type PrettyD0s<DFlex = void, DBase = void> = {
-  pretty: <TFlex = DFlex, TBase = DBase>(
-    name: string,
-    resolve: ResolveD0<string, TFlex, TBase>,
-    options?: Options
-  ) => D0<TFlex, TBase>;
-  prettyAST<TFlex = DFlex, TBase = DBase>(
-    name: string,
-    resolve: ResolveD0<string, TFlex, TBase>,
-    options?: prettier.Options
-  ): D0<TFlex, TBase>;
+export type PrettyD0s<D = any> = {
+  pretty: <T = D>(name: string, resolve: ResolveD0<string, T>, options?: Options) => D0<T>;
+  prettyAST<T = D>(name: string, resolve: ResolveD0<string, T>, options?: prettier.Options): D0<T>;
 };
 
-export const prettyD0s: <DFlex = void, DBase = void>() => PrettyD0s<DFlex, DBase> = <
-  DFlex = void,
-  DBase = void
->() => {
+export const prettyD0s: <D = any>() => PrettyD0s<D> = <D = any>() => {
   return {
-    pretty: <TFlex = DFlex, TBase = DBase>(
-      name: string,
-      resolve: ResolveD0<string, Or<TFlex, DFlex>, Or<TBase, DBase>>,
-      options?: Options
-    ) => pretty<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, resolve, options),
-    prettyAST: <TFlex = DFlex, TBase = DBase>(
-      name: string,
-      resolve: ResolveD0<string, Or<TFlex, DFlex>, Or<TBase, DBase>>,
-      options?: prettier.Options
-    ) => prettyAST<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, resolve, options),
-  } as PrettyD0s<DFlex, DBase>;
+    pretty: <T = D>(name: string, resolve: ResolveD0<string, Or<T, D>>, options?: Options) =>
+      pretty<Or<T, D>>(name, resolve, options),
+    prettyAST: <T = D>(name: string, resolve: ResolveD0<string, Or<T, D>>, options?: prettier.Options) =>
+      prettyAST<Or<T, D>>(name, resolve, options),
+  } as PrettyD0s<D>;
 };
 
 registerD0s('pretty', prettyD0s);

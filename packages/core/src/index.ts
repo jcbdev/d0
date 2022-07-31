@@ -36,116 +36,71 @@ import { when } from './lib/d0s/when';
 import { reset } from './lib/d0s/reset';
 import { d0 } from './lib/d0';
 
-export type CoreD0s<DFlex = void, DBase = void> = {
-  clear: <TFlex = DFlex, TBase = DBase>(name: string) => D0<TFlex, TBase>;
+export type CoreD0s<D = any> = {
+  clear: <T = D>(name: string) => D0<T>;
   // clear: Clear<any, TCtx>;
-  dynamic: <TFlex = DFlex, TBase = DBase>(name: string, template: string) => D0<TFlex, TBase>;
-  each: <T, TFlex = DFlex, TBase = DBase>(
-    resolve: ResolveD0<T[], TFlex, TBase>,
-    D0: ItemD0<T, TFlex, TBase>
-  ) => D0<TFlex, TBase>;
-  fork: <TFork extends any = any, TFlex = DFlex, TBase = DBase>(
-    D0: D0<TFork, void>,
-    map?: ResolveD0<TFork, TFlex, TBase>,
-    merge?: MergeD0<Ctx<TFork, void>, Ctx<TFlex, TBase>>
-  ) => D0<TFlex, TBase>;
-  merge: <TMerge extends any = any, TFlex = DFlex, TBase = DBase>(updateCtx: TMerge) => D0<TFlex, TBase>;
-  output: <TFlex = DFlex, TBase = DBase>(
-    path: PathLike | FileHandle,
-    resolve: ResolveD0<string, TFlex, TBase>
-  ) => D0<TFlex, TBase>;
-  remap: <TFlex = DFlex, TBase = DBase>(update?: D0<TFlex, TBase>) => D0<TFlex, TBase>;
-  repeat: <TFlex = DFlex, TBase = DBase>(num: number, D0: D0<TFlex, TBase>) => D0<TFlex, TBase>;
-  reset: <TFlex = DFlex, TBase = DBase>() => D0<TFlex, TBase>;
-  resolve: <TReturn extends any = any, TFlex = DFlex, TBase = DBase>(
-    ctx: Ctx<TFlex, TBase>,
-    $resolve: ResolveD0<TReturn, TFlex, TBase>
+  dynamic: <T = D>(name: string, template: string) => D0<T>;
+  each: <TItem = any, T = D>(resolve: ResolveD0<T[], T>, D0: ItemD0<TItem, T>) => D0<T>;
+  fork: <TFork extends any = any, T = D>(
+    D0: D0<TFork>,
+    map?: ResolveD0<TFork, T>,
+    merge?: MergeD0<TFork, Ctx<T>>
+  ) => D0<T>;
+  merge: <TMerge extends any = any, T = D>(updateCtx: TMerge) => D0<T>;
+  output: <T = D>(path: PathLike | FileHandle, resolve: ResolveD0<string, T>) => D0<T>;
+  remap: <T = D>(update?: D0<T>) => D0<T>;
+  repeat: <T = D>(num: number, D0: D0<T>) => D0<T>;
+  reset: <T = D>() => D0<T>;
+  resolve: <TReturn extends any = any, T = D>(
+    ctx: Ctx<T>,
+    $resolve: ResolveD0<TReturn, T>
   ) => TReturn | Promise<TReturn>;
-  sequence: <TFlex = DFlex, TBase = DBase>(D0s: D0<TFlex, TBase>[]) => D0<TFlex, TBase>;
-  set: <TReturn extends any = any, TFlex = DFlex, TBase = DBase>(
-    name: string,
-    update: ResolveD0<TReturn, TFlex, TBase>
-  ) => D0<TFlex, TBase>;
-  split: <TSplit extends any = any, TFlex = DFlex, TBase = DBase>(
-    fork: MergeD0<Ctx<TFlex, TBase>, Ctx<TSplit, void>>,
-    D0: D0<TSplit, void>,
-    merge: MergeD0<Ctx<TSplit, void>, Ctx<TFlex, TBase>>
-  ) => D0<TFlex, TBase>;
-  template: <TFlex = DFlex, TBase = DBase>(
-    name: string,
-    template: ResolveD0<string, TFlex, TBase>
-  ) => D0<TFlex, TBase>;
-  when: <TFlex = DFlex, TBase = DBase>(
-    condition: ConditionD0<TFlex, TBase>,
-    trueD0: D0<TFlex, TBase>,
-    falseD0: D0<TFlex, TBase>
-  ) => D0<TFlex, TBase>;
+  sequence: <T = D>(D0s: D0<T>[]) => D0<T>;
+  set: <TReturn extends any = any, T = D>(name: string, update: ResolveD0<TReturn, T>) => D0<T>;
+  split: <TSplit extends any = any, T = D>(
+    fork: MergeD0<Ctx<T>, Ctx<TSplit>>,
+    D0: D0<TSplit>,
+    merge: MergeD0<Ctx<TSplit>, Ctx<T>>
+  ) => D0<T>;
+  template: <T = D>(name: string, template: ResolveD0<string, T>) => D0<T>;
+  when: <T = D>(condition: ConditionD0<T>, trueD0: D0<T>, falseD0: D0<T>) => D0<T>;
 };
 
-export const baseD0s: <DFlex = void, DBase = void>() => BaseD0s<DFlex, DBase> = <
-  DFlex = void,
-  DBase = void
->() => {
+export const baseD0s: <D = any>() => BaseD0s<D> = <D>() => {
   return {
-    d0: <TD0, TFlex = DFlex, TBase = DBase>(
-      startD0: StartD0<TD0, Or<TFlex, DFlex>, Or<TBase, DBase>>,
-      $d0?: () => TD0,
-      withCtx?: Ctx<Or<TFlex, DFlex>, Or<TBase, DBase>>
-    ) => d0<TD0, Or<TFlex, DFlex>, Or<TBase, DBase>>(startD0, $d0, withCtx),
-  } as BaseD0s<DFlex, DBase>;
+    d0: <T = D, TD0 = any>(startD0: StartD0<TD0, T>, withCtx?: Ctx<T>, $d0?: () => TD0) =>
+      d0<TD0, T>(startD0, withCtx, $d0),
+  } as BaseD0s<D>;
 };
 
-export const coreD0s: <DFlex = void, DBase = void>() => CoreD0s<DFlex, DBase> = <
-  DFlex = void,
-  DBase = void
->() => {
+export const coreD0s: <D = any>() => CoreD0s<D> = <D>() => {
   return {
-    clear: <TFlex = DFlex, TBase = DBase>(name: string) => clear<Or<TFlex, DFlex>, Or<TBase, DBase>>(name),
-    dynamic: <TFlex = DFlex, TBase = DBase>(name: string, template: string) =>
-      dynamic<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, template),
-    each: <T, TFlex = DFlex, TBase = DBase>(
-      resolve: ResolveD0<T[], Or<TFlex, DFlex>, Or<TBase, DBase>>,
-      D0: ItemD0<T, Or<TFlex, DFlex>, Or<TBase, DBase>>
-    ) => each<T, Or<TFlex, DFlex>, Or<TBase, DBase>>(resolve, D0),
-    fork: <TFork extends any = any, TFlex = DFlex, TBase = DBase>(
-      D0: D0<TFork, void>,
-      map?: ResolveD0<TFork, Or<TFlex, DFlex>, Or<TBase, DBase>>,
-      merge?: MergeD0<Ctx<TFork, void>, Ctx<Or<TFlex, DFlex>, Or<TBase, DBase>>>
-    ) => _fork<TFork, Or<TFlex, DFlex>, Or<TBase, DBase>>(D0, map, merge),
-    merge: <TFlex = DFlex, TBase = DBase>(updateCtx: Ctx<Or<TFlex, DFlex>, Or<TBase, DBase>>) =>
-      merge<Or<TFlex, DFlex>, Or<TBase, DBase>>(updateCtx),
-    output: <TFlex = DFlex, TBase = DBase>(
-      path: PathLike | FileHandle,
-      resolve: ResolveD0<string, Or<TFlex, DFlex>, Or<TBase, DBase>>
-    ) => output<Or<TFlex, DFlex>, Or<TBase, DBase>>(path, resolve),
-    remap: <TFlex = DFlex, TBase = DBase>(update?: D0<Or<TFlex, DFlex>, Or<TBase, DBase>>) =>
-      remap<Or<TFlex, DFlex>, Or<TBase, DBase>>(update),
-    repeat: <TFlex = DFlex, TBase = DBase>(num: number, D0: D0<Or<TFlex, DFlex>, Or<TBase, DBase>>) =>
-      repeat<Or<TFlex, DFlex>, Or<TBase, DBase>>(num, D0),
-    reset: <TFlex = DFlex, TBase = DBase>() => reset<Or<TFlex, DFlex>, Or<TBase, DBase>>(),
-    resolve: <TReturn extends any = any, TFlex = DFlex, TBase = DBase>(
-      ctx: Ctx<Or<TFlex, DFlex>, Or<TBase, DBase>>,
-      $resolve: ResolveD0<TReturn, Or<TFlex, DFlex>, Or<TBase, DBase>>
-    ) => resolve<TReturn, Or<TFlex, DFlex>, Or<TBase, DBase>>(ctx, $resolve),
-    sequence: <TFlex = DFlex, TBase = DBase>(D0s: D0<Or<TFlex, DFlex>, Or<TBase, DBase>>[]) =>
-      sequence<Or<TFlex, DFlex>, Or<TBase, DBase>>(D0s),
-    set: <TReturn extends any = any, TFlex = DFlex, TBase = DBase>(
-      name: string,
-      update: ResolveD0<TReturn, Or<TFlex, DFlex>, Or<TBase, DBase>>
-    ) => set<TReturn, Or<TFlex, DFlex>, Or<TBase, DBase>>(name, update),
-    split: <TSplit extends any = any, TFlex = DFlex, TBase = DBase>(
-      fork: MergeD0<Ctx<Or<TFlex, DFlex>, Or<TBase, DBase>>, Ctx<TSplit, void>>,
-      D0: D0<TSplit, void>,
-      merge: MergeD0<Ctx<TSplit, void>, Ctx<Or<TFlex, DFlex>, Or<TBase, DBase>>>
-    ) => split<TSplit, Or<TFlex, DFlex>, Or<TBase, DBase>>(fork, D0, merge),
-    template: <TFlex = DFlex, TBase = DBase>(
-      name: string,
-      $template: ResolveD0<string, Or<TFlex, DFlex>, Or<TBase, DBase>>
-    ) => template<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, $template),
-    when: <TFlex = DFlex, TBase = DBase>(
-      condition: ConditionD0<Or<TFlex, DFlex>, Or<TBase, DBase>>,
-      trueD0: D0<Or<TFlex, DFlex>, Or<TBase, DBase>>,
-      falseD0: D0<Or<TFlex, DFlex>, Or<TBase, DBase>>
-    ) => when<Or<TFlex, DFlex>, Or<TBase, DBase>>(condition, trueD0, falseD0),
-  } as CoreD0s<DFlex, DBase>;
+    clear: <T = D>(name: string) => clear<T>(name),
+    dynamic: <T = D>(name: string, template: string) => dynamic<T>(name, template),
+    each: <TItem = any, T = D>(resolve: ResolveD0<TItem[], T>, D0: ItemD0<TItem, T>) =>
+      each<TItem, T>(resolve, D0),
+    fork: <TFork extends any = any, T = D>(
+      D0: D0<TFork>,
+      map?: ResolveD0<TFork, T>,
+      merge?: MergeD0<Ctx<TFork>, Ctx<T>>
+    ) => _fork<TFork, T>(D0, map, merge),
+    merge: <T = D>(updateCtx: Ctx<T>) => merge<T>(updateCtx),
+    output: <T = D>(path: PathLike | FileHandle, resolve: ResolveD0<string, T>) => output<T>(path, resolve),
+    remap: <T = D>(update?: D0<T>) => remap<T>(update),
+    repeat: <T = D>(num: number, D0: D0<T>) => repeat<T>(num, D0),
+    reset: <T = D>() => reset<T>(),
+    resolve: <TReturn extends any = any, T = D>(ctx: Ctx<T>, $resolve: ResolveD0<TReturn, T>) =>
+      resolve<TReturn, T>(ctx, $resolve),
+    sequence: <T = D>(D0s: D0<T>[]) => sequence<T>(D0s),
+    set: <TReturn extends any = any, T = D>(name: string, update: ResolveD0<TReturn, T>) =>
+      set<TReturn, T>(name, update),
+    split: <TSplit extends any = any, T = D>(
+      fork: MergeD0<Ctx<T>, Ctx<TSplit>>,
+      D0: D0<TSplit>,
+      merge: MergeD0<Ctx<TSplit>, Ctx<T>>
+    ) => split<TSplit, T>(fork, D0, merge),
+    template: <T = D>(name: string, $template: ResolveD0<string, T>) => template<T>(name, $template),
+    when: <T = D>(condition: ConditionD0<T>, trueD0: D0<T>, falseD0: D0<T>) =>
+      when<T>(condition, trueD0, falseD0),
+  } as CoreD0s<D>;
 };

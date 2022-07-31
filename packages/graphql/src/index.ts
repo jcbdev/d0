@@ -12,29 +12,19 @@ export * from './lib/graphql-summary';
 export * from './lib/graphql-selector';
 export * from './lib/types';
 
-export type GraphQLD0s<DFlex = void, DBase = void> = {
-  graphQLSummary: <TFlex = DFlex, TBase = DBase>(
-    name: string,
-    resolve: ResolveD0<ASTNode, TFlex, TBase>
-  ) => D0<TFlex, TBase>;
-  graphQL: <TFlex = DFlex, TBase = DBase>(name: string, gql: string) => D0<TFlex, TBase>;
-  loadGraphQL: <TFlex = DFlex, TBase = DBase>(name: string, path: PathLike | FileHandle) => D0<TFlex, TBase>;
+export type GraphQLD0s<D = any> = {
+  graphQLSummary: <T = D>(name: string, resolve: ResolveD0<ASTNode, T>) => D0<T>;
+  graphQL: <T = D>(name: string, gql: string) => D0<T>;
+  loadGraphQL: <T = D>(name: string, path: PathLike | FileHandle) => D0<T>;
 };
 
-export const graphQLD0s: <DFlex = void, DBase = void>() => GraphQLD0s<DFlex, DBase> = <
-  DFlex = void,
-  DBase = void
->() => {
+export const graphQLD0s: <D = any>() => GraphQLD0s<D> = <D = any>() => {
   return {
-    graphQLSummary: <TFlex = DFlex, TBase = DBase>(
-      name: string,
-      resolve: ResolveD0<ASTNode, Or<TFlex, DFlex>, Or<TBase, DBase>>
-    ) => graphQLSummary<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, resolve),
-    graphQL: <TFlex = DFlex, TBase = DBase>(name: string, gql: string) =>
-      graphQL<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, gql),
-    loadGraphQL: <TFlex = DFlex, TBase = DBase>(name: string, path: PathLike | FileHandle) =>
-      loadGraphQL<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, path),
-  } as GraphQLD0s<DFlex, DBase>;
+    graphQLSummary: <T = D>(name: string, resolve: ResolveD0<ASTNode, Or<T, D>>) =>
+      graphQLSummary<Or<T, D>>(name, resolve),
+    graphQL: <T = D>(name: string, gql: string) => graphQL<Or<T, D>>(name, gql),
+    loadGraphQL: <T = D>(name: string, path: PathLike | FileHandle) => loadGraphQL<Or<T, D>>(name, path),
+  } as GraphQLD0s<D>;
 };
 
 registerD0s('graphql', graphQLD0s);

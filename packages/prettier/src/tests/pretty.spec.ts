@@ -5,7 +5,7 @@ describe('prettier formatting of code', () => {
     let ctx: any = {
       transformed: `type hello={id:string;test:string}`,
     };
-    let result = await pretty<'Flex'>('pretty', ctx => ctx.transformed, {
+    let result = await pretty<any>('pretty', ctx => ctx.transformed, {
       parser: 'typescript',
       filepath: 'test.ts',
       printWidth: 20,

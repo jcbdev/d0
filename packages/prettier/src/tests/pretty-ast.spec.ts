@@ -50,7 +50,7 @@ describe('prettier formatting of code ast', () => {
         sourceType: 'script',
       },
     };
-    let result = await prettyAST<'Flex'>('pretty', ctx => ctx.ast, {
+    let result = await prettyAST<any>('pretty', ctx => ctx.ast, {
       parser: 'typescript',
       filepath: 'test.ts',
       printWidth: 20,

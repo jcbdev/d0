@@ -1,9 +1,6 @@
 import { D0, ItemD0, ResolveD0 } from '../types';
 
-export const each = <T, TFlex = void, TBase = void>(
-  resolve: ResolveD0<T[], TFlex, TBase>,
-  d0: ItemD0<T, TFlex, TBase>
-): D0<TFlex, TBase> => {
+export const each = <TItem = any, T = any>(resolve: ResolveD0<TItem[], T>, d0: ItemD0<TItem, T>): D0<T> => {
   return async ctx => {
     let items = await resolve(ctx);
     for (let item of items) {

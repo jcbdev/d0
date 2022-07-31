@@ -22,14 +22,14 @@ export type NodeInfo = {
   selector: string;
 };
 
-export type Visitor<T = any, TCtx = Ctx<'Flex'>> = FlexVisitor<T, TCtx> | FlexEnterLeaveVisitor<T, TCtx>;
+export type Visitor<T = any, TCtx = Ctx<any>> = FlexVisitor<T, TCtx> | FlexEnterLeaveVisitor<T, TCtx>;
 
-export type FlexVisitor<T = any, TCtx = Ctx<'Flex'>> = {
+export type FlexVisitor<T = any, TCtx = Ctx<any>> = {
   enter?: { [P: string]: EnterNode<T, TCtx> } | { regex?: RegexEnterNode<T, TCtx>[] };
   leave?: { [P: string]: LeaveNode<T, TCtx> } | { regex?: RegexLeaveNode<T, TCtx>[] };
 };
 
-export type FlexEnterLeaveVisitor<T = any, TCtx = Ctx<'Flex'>> = {
+export type FlexEnterLeaveVisitor<T = any, TCtx = Ctx<any>> = {
   [P: string]: {
     enter?: EnterNode<T, TCtx>;
     leave?: LeaveNode<T, TCtx>;

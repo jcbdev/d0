@@ -4,21 +4,16 @@ import { httpText } from './lib/http-text';
 import { httpJson } from './lib/http-json';
 import { D0, Or, registerD0s, registerDefaultD0s } from '@d0-it/core';
 
-export type PullD0s<DFlex = void, DBase = void> = {
-  httpJson: <TFlex = DFlex, TBase = DBase>(name: string, url: string) => D0<TFlex, TBase>;
-  httpText: <TFlex = DFlex, TBase = DBase>(name: string, url: string) => D0<TFlex, TBase>;
+export type PullD0s<D> = {
+  httpJson: <T = D>(name: string, url: string) => D0<T>;
+  httpText: <T = D>(name: string, url: string) => D0<T>;
 };
 
-export const pullD0s: <DFlex = void, DBase = void>() => PullD0s<DFlex, DBase> = <
-  DFlex = void,
-  DBase = void
->() => {
+export const pullD0s: <D = any>() => PullD0s<D> = <D = any>() => {
   return {
-    httpJson: <TFlex = DFlex, TBase = DBase>(name: string, url: string) =>
-      httpJson<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, url),
-    httpText: <TFlex = DFlex, TBase = DBase>(name: string, url: string) =>
-      httpText<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, url),
-  } as PullD0s<DFlex, DBase>;
+    httpJson: <T = D>(name: string, url: string) => httpJson<Or<T, D>>(name, url),
+    httpText: <T = D>(name: string, url: string) => httpText<Or<T, D>>(name, url),
+  } as PullD0s<D>;
 };
 
 registerD0s('pull', pullD0s);

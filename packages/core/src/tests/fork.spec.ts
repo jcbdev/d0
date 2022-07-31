@@ -3,7 +3,7 @@ import { D0 } from '../lib/types';
 
 describe('execute an D0 in isolated context', () => {
   it('should isolate and remerge context using the same structure', async () => {
-    let mockD01: D0<any, {}> = ctx => {
+    let mockD01: D0<any> = ctx => {
       ctx['exists'] = ctx['original'] ?? false;
       return ctx;
     };
@@ -17,7 +17,7 @@ describe('execute an D0 in isolated context', () => {
   });
 
   it('should map sub-context using map function and then merge both to original', async () => {
-    let mockD01: D0<any, {}> = ctx => {
+    let mockD01: D0<any> = ctx => {
       ctx['exists'] = ctx['original'] ?? false;
       return ctx;
     };
@@ -32,12 +32,12 @@ describe('execute an D0 in isolated context', () => {
   });
 
   it('should map sub-context using map function and then intercep re-merge function', async () => {
-    let mockD01: D0<any, void> = ctx => {
+    let mockD01: D0<any> = ctx => {
       ctx['exists'] = ctx['original'] ?? false;
       return ctx;
     };
 
-    let result = await fork<any, any>(
+    let result = await fork(
       mockD01,
       ctx => ({ notOriginalAnymore: true }),
       (s, d) => {

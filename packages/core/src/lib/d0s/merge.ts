@@ -1,6 +1,6 @@
 import { D0, Ctx } from '../types';
 
-export const merge = <TFlex = void, TBase = void>(updateCtx: Ctx<TFlex, TBase>): D0<TFlex, TBase> => {
+export const merge = <T = any>(updateCtx: Ctx<T>): D0<T> => {
   return ctx => {
     return {
       ...ctx,

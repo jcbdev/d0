@@ -89,7 +89,7 @@ describe('walk an object from the context', () => {
         notprimitive: new Date(),
       },
     };
-    ctx = await walk<'Flex'>('result', ({ theNode }: { theNode: any }) => theNode, selector, visitor)(ctx);
+    ctx = await walk<any>('result', ({ theNode }: { theNode: any }) => theNode, selector, visitor)(ctx);
     // console.log(JSON.stringify(ctx));
 
     expect(ctx).toEqual({

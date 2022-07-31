@@ -29,6 +29,7 @@ describe('execute a function', () => {
       (d0, ctx) => {
         return mockD01;
       },
+      undefined,
       () => {
         return coreD0s<MyCtx>();
       }
@@ -49,10 +50,10 @@ describe('execute a function', () => {
       (d0$, ctx) => {
         return mockD01;
       },
+      { existing: true },
       () => {
         return coreD0s<MyCtx>();
-      },
-      { existing: true }
+      }
     );
     expect(result).toEqual({
       count: 1,

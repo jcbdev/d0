@@ -1,19 +1,8 @@
-import {
-  d0,
-  output,
-  sequence,
-  template,
-  resolve,
-  CoreD0s,
-  coreD0s,
-  baseD0s,
-  BaseD0s,
-  defaultD0s,
-} from '@d0-it/core';
+import { d0, CoreD0s, BaseD0s } from '@d0-it/core';
 import '@d0-it/graphql';
 import '@d0-it/prettier';
-import { loadGraphQL, graphQLSummary, GraphQLD0s, graphQLD0s } from '@d0-it/graphql';
-import { pretty, prettyD0s, PrettyD0s } from '@d0-it/prettier';
+import { GraphQLD0s } from '@d0-it/graphql';
+import { PrettyD0s } from '@d0-it/prettier';
 import { writeFile, readFile } from 'fs/promises';
 import path from 'path';
 import os from 'os';
@@ -34,7 +23,7 @@ const rndFileNameTS = () => {
 };
 
 describe('Generate some typescript from a graphql source', () => {
-  it.only('generate a type - strongly typed', async () => {
+  it('generate a type - strongly typed', async () => {
     let fileName = rndFileName();
     let outFileName = rndFileNameTS();
 
@@ -86,7 +75,7 @@ type Comment {
 
     type d0s<T = ProcessingContext> = BaseD0s<T> & CoreD0s<T> & GraphQLD0s<T> & PrettyD0s<T>;
 
-    let resCtx = await d0<d0s<ProcessingContext>, ProcessingContext>(async (d0, ctx) => {
+    let resCtx = await d0<d0s<ProcessingContext>, ProcessingContext>(async (ctx, d0) => {
       return await d0.sequence([
         d0.loadGraphQL('gql', fileName),
         d0.graphQLSummary('summary', ctx => ctx.gql),
@@ -170,7 +159,7 @@ type Comment {
     `
     );
 
-    let resCtx: any = await d0<any>((d0, ctx: any) => {
+    let resCtx: any = await d0((ctx, d0) => {
       return d0.sequence([
         d0.loadGraphQL('gql', fileName),
         d0.graphQLSummary('summary', ctx => ctx.gql),

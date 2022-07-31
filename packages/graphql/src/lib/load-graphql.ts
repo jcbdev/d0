@@ -4,10 +4,7 @@ import { FileHandle, readFile } from 'fs/promises';
 import { PathLike } from 'fs';
 import path from 'path';
 
-export const loadGraphQL = <TFlex = void, TBase = void>(
-  name: string,
-  path: PathLike | FileHandle
-): D0<TFlex, TBase> => {
+export const loadGraphQL = <T = any>(name: string, path: PathLike | FileHandle): D0<T> => {
   return async ctx => {
     const text = await readFile(path, 'utf8');
     ctx[name] = parse(text);

@@ -14,40 +14,23 @@ import { fromYaml } from './lib/from-yaml';
 import { mergeJson } from './lib/merge-json';
 import { mergeYaml } from './lib/merge-yaml';
 
-export type FromD0s<DFlex = void, DBase = void> = {
-  fromJson: <TFlex = DFlex, TBase = DBase>(name: string, path: PathLike | FileHandle) => D0<TFlex, TBase>;
-  fromText: <TFlex = DFlex, TBase = DBase>(name: string, path: PathLike | FileHandle) => D0<TFlex, TBase>;
-  fromYaml: <TFlex = DFlex, TBase = DBase>(
-    name: string,
-    path: PathLike | FileHandle,
-    options?: LoadOptions
-  ) => D0<TFlex, TBase>;
-  mergeJson: <TFlex = DFlex, TBase = DBase>(path: PathLike | FileHandle) => D0<TFlex, TBase>;
-  mergeYaml: <TFlex = DFlex, TBase = DBase>(
-    path: PathLike | FileHandle,
-    options?: LoadOptions
-  ) => D0<TFlex, TBase>;
+export type FromD0s<T = any> = {
+  fromJson: <T>(name: string, path: PathLike | FileHandle) => D0<T>;
+  fromText: <T>(name: string, path: PathLike | FileHandle) => D0<T>;
+  fromYaml: <T>(name: string, path: PathLike | FileHandle, options?: LoadOptions) => D0<T>;
+  mergeJson: <T>(path: PathLike | FileHandle) => D0<T>;
+  mergeYaml: <T>(path: PathLike | FileHandle, options?: LoadOptions) => D0<T>;
 };
 
-export const fromD0s: <DFlex = void, DBase = void>() => FromD0s<DFlex, DBase> = <
-  DFlex = void,
-  DBase = void
->() => {
+export const fromD0s: <D = any>() => FromD0s<D> = <D = any>() => {
   return {
-    fromJson: <TFlex = DFlex, TBase = DBase>(name: string, path: PathLike | FileHandle) =>
-      fromJson<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, path),
-    fromText: <TFlex = DFlex, TBase = DBase>(name: string, path: PathLike | FileHandle) =>
-      fromText<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, path),
-    fromYaml: <TFlex = DFlex, TBase = DBase>(
-      name: string,
-      path: PathLike | FileHandle,
-      options?: LoadOptions
-    ) => fromYaml<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, path, options),
-    mergeJson: <TFlex = DFlex, TBase = DBase>(path: PathLike | FileHandle) =>
-      mergeJson<Or<TFlex, DFlex>, Or<TBase, DBase>>(path),
-    mergeYaml: <TFlex = DFlex, TBase = DBase>(path: PathLike | FileHandle, options?: LoadOptions) =>
-      mergeYaml<Or<TFlex, DFlex>, Or<TBase, DBase>>(path, options),
-  } as FromD0s<DFlex, DBase>;
+    fromJson: <T>(name: string, path: PathLike | FileHandle) => fromJson<Or<T, D>>(name, path),
+    fromText: <T>(name: string, path: PathLike | FileHandle) => fromText<Or<T, D>>(name, path),
+    fromYaml: <T>(name: string, path: PathLike | FileHandle, options?: LoadOptions) =>
+      fromYaml<Or<T, D>>(name, path, options),
+    mergeJson: <T>(path: PathLike | FileHandle) => mergeJson<Or<T, D>>(path),
+    mergeYaml: <T>(path: PathLike | FileHandle, options?: LoadOptions) => mergeYaml<Or<T, D>>(path, options),
+  } as FromD0s<D>;
 };
 
 registerD0s('from', fromD0s);
