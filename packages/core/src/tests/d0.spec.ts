@@ -25,13 +25,14 @@ describe('execute a function', () => {
       return ctx;
     };
 
-    let result = await d0<CoreD0s<MyCtx>, MyCtx>(
-      (d0, ctx) => {
+    let result = await d0<MyCtx, CoreD0s<MyCtx>>(
+      (ctx, d0) => {
         return mockD01;
       },
-      undefined,
-      () => {
-        return coreD0s<MyCtx>();
+      {
+        d0: () => {
+          return coreD0s<MyCtx>();
+        },
       }
     );
     expect(result).toEqual({
@@ -46,13 +47,15 @@ describe('execute a function', () => {
       return ctx;
     };
 
-    let result = await d0<CoreD0s<MyCtx>, MyCtx>(
-      (d0$, ctx) => {
+    let result = await d0<MyCtx, CoreD0s<MyCtx>>(
+      (ctx, d0$) => {
         return mockD01;
       },
-      { existing: true },
-      () => {
-        return coreD0s<MyCtx>();
+      {
+        withCtx: { existing: true },
+        d0: () => {
+          return coreD0s<MyCtx>();
+        },
       }
     );
     expect(result).toEqual({

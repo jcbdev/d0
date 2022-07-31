@@ -4,8 +4,10 @@ import { D0 } from '../lib/types';
 describe('execute an D0 in isolated context', () => {
   it('should isolate and remerge context using the same structure', async () => {
     let mockD01: D0<any> = ctx => {
-      ctx['exists'] = ctx['original'] ?? false;
-      return ctx;
+      return ctx => {
+        ctx['exists'] = ctx['original'] ?? false;
+        return ctx;
+      };
     };
 
     let result = await fork(mockD01)({ original: true });
@@ -18,11 +20,14 @@ describe('execute an D0 in isolated context', () => {
 
   it('should map sub-context using map function and then merge both to original', async () => {
     let mockD01: D0<any> = ctx => {
-      ctx['exists'] = ctx['original'] ?? false;
-      return ctx;
+      return ctx => {
+        ctx['exists'] = ctx['original'] ?? false;
+        return ctx;
+      };
     };
 
-    let result = await fork(mockD01, ctx => ({ notOriginalAnymore: true }))({ original: true });
+    // let result = await fork(mockD01, ctx => ({ notOriginalAnymore: true }))({ original: true });
+    let result = await fork(mockD01, { map: ctx => ({ notOriginalAnymore: true }) })({ original: true });
 
     expect(result).toEqual({
       exists: false,
@@ -33,19 +38,20 @@ describe('execute an D0 in isolated context', () => {
 
   it('should map sub-context using map function and then intercep re-merge function', async () => {
     let mockD01: D0<any> = ctx => {
-      ctx['exists'] = ctx['original'] ?? false;
-      return ctx;
+      return ctx => {
+        ctx['exists'] = ctx['original'] ?? false;
+        return ctx;
+      };
     };
 
-    let result = await fork(
-      mockD01,
-      ctx => ({ notOriginalAnymore: true }),
-      (s, d) => {
+    let result = await fork<any>(mockD01, {
+      map: ctx => ({ notOriginalAnymore: true }),
+      merge: (s, d) => {
         d.exists = s.exists;
         d.mappedOnMerge = true;
         return d;
-      }
-    )({ original: true });
+      },
+    })({ original: true });
 
     expect(result).toEqual({
       exists: false,

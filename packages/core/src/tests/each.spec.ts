@@ -4,8 +4,10 @@ import { D0, ItemD0, ResolveD0 } from '../lib/types';
 describe('repeat an D0 for each item', () => {
   it('should repeat the D0 for every item in the list', async () => {
     let repeatD0: ItemD0<number, { results: number[]; items: number[] }> = (item, ctx) => {
-      ctx.results.push(item as number);
-      return ctx;
+      return ctx => {
+        ctx.results.push(item as number);
+        return ctx;
+      };
     };
 
     let resolveD0: ResolveD0<number[], { results: number[]; items: number[] }> = ctx => {
