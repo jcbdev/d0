@@ -3,7 +3,7 @@ import { D0 } from '../lib/types';
 
 describe('execute an D0 in isolated context', () => {
   it('should isolate and remerge context', async () => {
-    let mockD01: D0<'Flex'> = ctx => {
+    let mockD01: D0<any, {}> = ctx => {
       ctx['exists'] = ctx['original'] ?? false;
       return ctx;
     };

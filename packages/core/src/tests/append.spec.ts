@@ -1,4 +1,4 @@
-import { output } from '../lib/d0s/output';
+import { append } from '../lib/d0s/append';
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 import os from 'os';
@@ -16,12 +16,13 @@ describe('should save text to file', () => {
       `${(Math.random() + 1).toString(36).substring(7)}-${(Math.random() + 1).toString(36).substring(7)}.json`
     );
 
-    // Show that it truncates the file if it already exists
     await writeFile(rndFile, '<<Some existing file content>>');
 
-    let result = await output(rndFile, () => outputJson)({} as any);
+    let result = await append(rndFile, () => outputJson)({} as any);
 
-    let resultJson = JSON.parse(await readFile(rndFile, 'utf8'));
+    let content = await readFile(rndFile, 'utf8');
+    expect(content.startsWith('<<Some existing file content>>')).toBeTruthy();
+    let resultJson = JSON.parse(content.replace('<<Some existing file content>>', ''));
     expect(resultJson).toEqual({
       testValue: 'Hello',
       otherValue: 123,

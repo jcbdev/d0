@@ -3,7 +3,7 @@ export { fromText } from './lib/from-text';
 export { fromYaml } from './lib/from-yaml';
 export { mergeJson } from './lib/merge-json';
 export { mergeYaml } from './lib/merge-yaml';
-import { D0, Or } from '@d0-it/core';
+import { D0, Or, registerD0s, registerDefaultD0s } from '@d0-it/core';
 
 import { FileHandle } from 'fs/promises';
 import { PathLike } from 'fs';
@@ -49,3 +49,6 @@ export const fromD0s: <DFlex = void, DBase = void>() => FromD0s<DFlex, DBase> = 
       mergeYaml<Or<TFlex, DFlex>, Or<TBase, DBase>>(path, options),
   } as FromD0s<DFlex, DBase>;
 };
+
+registerD0s('from', fromD0s);
+registerDefaultD0s(fromD0s);

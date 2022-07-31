@@ -20,10 +20,7 @@ export type ItemD0<T, TFlex = void, TBase = void> = (
   ctx: Ctx<TFlex, TBase>
 ) => Promise<Ctx<TFlex, TBase>> | Ctx<TFlex, TBase>;
 
-export type MergeD0<TFlex = void, TBase = void> = (
-  source: Ctx<TFlex, TBase>,
-  target: Ctx<TFlex, TBase>
-) => Promise<Ctx<TFlex, TBase>> | Ctx<TFlex, TBase>;
+export type MergeD0<TSource, TTarget> = (source: TSource, target: TTarget) => Promise<TTarget> | TTarget;
 
 export type ResolveD0<TReturn extends any, TFlex = void, TBase = void> = (
   ctx: Ctx<TFlex, TBase>
@@ -35,8 +32,8 @@ export type Or<T = void, TOr = void> = T extends void ? TOr : T;
 
 export type BaseD0s<DFlex = void, DBase = void> = {
   d0: <TD0, DFlex = void, DBase = void>(
-    d0: <TFlex = DFlex>() => TD0,
     startD0: StartD0<TD0, DFlex, DBase>,
+    d0?: <TFlex = DFlex, TBase = DBase>() => TD0,
     withCtx?: Ctx<DFlex, DBase>
   ) => Promise<Ctx<DFlex, DBase>>;
 };

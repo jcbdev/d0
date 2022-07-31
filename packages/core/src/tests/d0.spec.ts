@@ -3,6 +3,21 @@ import { d0 } from '../lib/d0';
 import { D0 } from '../lib/types';
 
 describe('execute a function', () => {
+  it('should run D0 and using default context configuration', async () => {
+    type MyCtx = { count: number };
+    let mockD01: D0<MyCtx> = ctx => {
+      ctx['count'] = 1;
+      return ctx;
+    };
+
+    let result = await d0((d0, ctx) => {
+      return mockD01;
+    });
+    expect(result).toEqual({
+      count: 1,
+    });
+  });
+
   it('should run D0 and return updated context', async () => {
     type MyCtx = { count: number };
     let mockD01: D0<MyCtx> = ctx => {
@@ -11,11 +26,11 @@ describe('execute a function', () => {
     };
 
     let result = await d0<CoreD0s<MyCtx>, MyCtx>(
-      () => {
-        return coreD0s<MyCtx>();
-      },
       (d0, ctx) => {
         return mockD01;
+      },
+      () => {
+        return coreD0s<MyCtx>();
       }
     );
     expect(result).toEqual({
@@ -31,11 +46,11 @@ describe('execute a function', () => {
     };
 
     let result = await d0<CoreD0s<MyCtx>, MyCtx>(
-      () => {
-        return coreD0s<MyCtx>();
-      },
       (d0$, ctx) => {
         return mockD01;
+      },
+      () => {
+        return coreD0s<MyCtx>();
       },
       { existing: true }
     );

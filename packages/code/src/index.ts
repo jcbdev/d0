@@ -1,4 +1,4 @@
-import { Or, D0 } from '@d0-it/core';
+import { Or, D0, registerD0s, registerDefaultD0s } from '@d0-it/core';
 import { d0With } from './lib/d0-with';
 import { getFunctions } from './lib/get-functions';
 import { getStatements } from './lib/get-statements';
@@ -25,3 +25,6 @@ export const codeD0s: <DFlex = void, DAst = void, DNode = void>() => CodeD0s<DFl
     },
   } as CodeD0s<DFlex, DAst, DNode>;
 };
+
+registerD0s('code', codeD0s);
+registerDefaultD0s(codeD0s);

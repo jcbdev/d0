@@ -1,4 +1,4 @@
-import { ConditionD0, Ctx, D0, ItemD0, MergeD0, Or, ResolveD0 } from '@d0-it/core';
+import { D0, Or, registerD0s, registerDefaultD0s, ResolveD0 } from '@d0-it/core';
 import { PathLike } from 'fs';
 import { FileHandle } from 'fs/promises';
 import { ASTNode } from 'graphql';
@@ -36,3 +36,6 @@ export const graphQLD0s: <DFlex = void, DBase = void>() => GraphQLD0s<DFlex, DBa
       loadGraphQL<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, path),
   } as GraphQLD0s<DFlex, DBase>;
 };
+
+registerD0s('graphql', graphQLD0s);
+registerDefaultD0s(graphQLD0s);

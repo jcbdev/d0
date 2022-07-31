@@ -1,4 +1,4 @@
-import { D0, Or, ResolveD0 } from '@d0-it/core';
+import { D0, Or, registerD0s, registerDefaultD0s, ResolveD0 } from '@d0-it/core';
 import { Options } from 'prettier';
 import { pretty } from './lib/pretty';
 import prettier from 'prettier';
@@ -37,3 +37,6 @@ export const prettyD0s: <DFlex = void, DBase = void>() => PrettyD0s<DFlex, DBase
     ) => prettyAST<Or<TFlex, DFlex>, Or<TBase, DBase>>(name, resolve, options),
   } as PrettyD0s<DFlex, DBase>;
 };
+
+registerD0s('pretty', prettyD0s);
+registerDefaultD0s(prettyD0s);

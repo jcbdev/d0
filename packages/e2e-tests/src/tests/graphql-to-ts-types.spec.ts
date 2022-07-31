@@ -1,4 +1,17 @@
-import { d0, output, sequence, template, resolve, CoreD0s, coreD0s, baseD0s, BaseD0s } from '@d0-it/core';
+import {
+  d0,
+  output,
+  sequence,
+  template,
+  resolve,
+  CoreD0s,
+  coreD0s,
+  baseD0s,
+  BaseD0s,
+  defaultD0s,
+} from '@d0-it/core';
+import '@d0-it/graphql';
+import '@d0-it/prettier';
 import { loadGraphQL, graphQLSummary, GraphQLD0s, graphQLD0s } from '@d0-it/graphql';
 import { pretty, prettyD0s, PrettyD0s } from '@d0-it/prettier';
 import { writeFile, readFile } from 'fs/promises';
@@ -72,14 +85,8 @@ type Comment {
     };
 
     type d0s<T = ProcessingContext> = BaseD0s<T> & CoreD0s<T> & GraphQLD0s<T> & PrettyD0s<T>;
-    const configure = <T = ProcessingContext>(): d0s<T> => ({
-      ...baseD0s<T>(),
-      ...coreD0s<T>(),
-      ...graphQLD0s<T>(),
-      ...prettyD0s<T>(),
-    });
 
-    let resCtx = await d0<d0s<ProcessingContext>, ProcessingContext>(configure, async (d0, ctx) => {
+    let resCtx = await d0<d0s<ProcessingContext>, ProcessingContext>(async (d0, ctx) => {
       return await d0.sequence([
         d0.loadGraphQL('gql', fileName),
         d0.graphQLSummary('summary', ctx => ctx.gql),
@@ -163,13 +170,7 @@ type Comment {
     `
     );
 
-    const configure = () => ({
-      ...coreD0s<any>(),
-      ...graphQLD0s<any>(),
-      ...prettyD0s<any>(),
-    });
-
-    let resCtx: any = await d0(configure, (d0, ctx: any) => {
+    let resCtx: any = await d0<any>((d0, ctx: any) => {
       return d0.sequence([
         d0.loadGraphQL('gql', fileName),
         d0.graphQLSummary('summary', ctx => ctx.gql),
